@@ -1,0 +1,8 @@
+branches
+.branches.swp
+.gitignore.swp
+.*.swp
+.*.s*p
+.*.*wp
+.*.sw*
+
