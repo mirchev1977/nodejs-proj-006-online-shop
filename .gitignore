@@ -6,3 +6,4 @@ branches
 .*.*wp
 .*.sw*
 
+node_modules
