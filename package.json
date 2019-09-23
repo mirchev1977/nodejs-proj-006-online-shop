@@ -1,0 +1,20 @@
+{
+  "name": "online-shop",
+  "version": "1.0.0",
+  "description": "online shop",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://mirchev7@bitbucket.org/mirchev7/nodejs.git"
+  },
+  "keywords": [
+    "online",
+    "shop"
+  ],
+  "author": "Miroslav Mirchev",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/mirchev7/nodejs#readme"
+}
