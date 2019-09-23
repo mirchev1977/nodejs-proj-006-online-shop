@@ -13,6 +13,10 @@ app.use( bodyParser.urlencoded( { extended: false }            ) );
 app.set( 'view engine', 'pug'       );
 app.set( 'views',       'src/views' );
 
+app.get( '/', ( req, res, next ) => {
+    res.render( 'home' );
+} );
+
 app.use( ( req, res, next ) => {
     res.render( '404' );
 } );
