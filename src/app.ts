@@ -12,8 +12,7 @@ app.set( 'view engine', 'pug'       );
 app.set( 'views',       'src/views' );
 
 app.get( '/', ( req, res, next ) => {
-    res.write( 'Hello, world!' );
-    res.end();
+    res.render( 'hello-world' );
 } );
 
 app.listen( process.env.PORT || 3000, () => {

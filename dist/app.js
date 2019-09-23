@@ -7,11 +7,11 @@ const express_1 = __importDefault(require("express"));
 const path_1 = __importDefault(require("path"));
 const app = express_1.default();
 const rootDir = path_1.default.dirname(process.mainModule.filename);
-console.log(path_1.default.join(rootDir, 'public'));
-//app.use( express.static(  ) );
+app.use(express_1.default.static(path_1.default.join(rootDir, 'public')));
+app.set('view engine', 'pug');
+app.set('views', 'src/views');
 app.get('/', (req, res, next) => {
-    res.write('Hello, world!');
-    res.end();
+    res.render('hello-world');
 });
 app.listen(process.env.PORT || 3000, () => {
     console.log('Listening on port 3000');
