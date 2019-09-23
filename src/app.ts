@@ -1,12 +1,14 @@
 "use strict";
 
-import express from 'express';
-import path    from 'path';
+import express    from 'express';
+import path       from 'path';
+import bodyParser from 'body-parser';
 
 const app = express();
 
-const rootDir = path.dirname( process.mainModule.filename );
-app.use( express.static( path.join( rootDir, 'public' ) ) );
+const rootDir = path.dirname(   process.mainModule.filename      );
+app.use( express.static(        path.join( rootDir, 'public' ) ) );
+app.use( bodyParser.urlencoded( { extended: false }            ) );
 
 app.set( 'view engine', 'pug'       );
 app.set( 'views',       'src/views' );
