@@ -16,5 +16,9 @@
   ],
   "author": "Miroslav Mirchev",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/mirchev7/nodejs#readme"
+  "homepage": "https://bitbucket.org/mirchev7/nodejs#readme",
+  "devDependencies": {
+    "tslint": "^5.20.0",
+    "typescript": "^3.6.3"
+  }
 }
