@@ -13,8 +13,8 @@ app.use( bodyParser.urlencoded( { extended: false }            ) );
 app.set( 'view engine', 'pug'       );
 app.set( 'views',       'src/views' );
 
-app.get( '/', ( req, res, next ) => {
-    res.render( 'hello-world' );
+app.use( ( req, res, next ) => {
+    res.render( '404' );
 } );
 
 app.listen( process.env.PORT || 3000, () => {
