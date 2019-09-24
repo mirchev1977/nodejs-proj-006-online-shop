@@ -1,0 +1,23 @@
+extends ../main-layout.pug
+
+block append main-layout__head__stylesheets
+    link( rel="stylesheet" href="/styles/form-registration.css" type="text/css" )
+
+block main-layout__header__menu
+    ul.main-layout__menu
+        a( href="/" )
+            li Home
+        div
+        a( href="/register" )
+            li( class="active" ) Register
+        a( href="/login" )
+            li Login
+        a( href="/logout" )
+            li Logout
+
+block main-layout__block
+    h1 You were registered...
+    script.
+        setTimeout( function () {
+            window.location = '/';
+        }, 2000 );

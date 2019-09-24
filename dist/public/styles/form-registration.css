@@ -1,0 +1,34 @@
+.form-registration {
+    width: 50%;
+    padding: 20px 30px;
+    text-align: center;
+}
+
+.form-registration_field {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    padding-bottom: 10px;
+}
+
+.form-registration_field label, .form-registration input  {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.form-registration_field label {
+    margin-right: 10px;
+    text-align: right;
+}
+
+.form-registration_field button {
+    padding: 10px;
+}
+
+.form-registration_field.submit label {
+    border: none;
+}
+
+.form-registration_field.submit button {
+    font-size: 17px;
+}

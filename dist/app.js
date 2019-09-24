@@ -6,12 +6,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const path_1 = __importDefault(require("path"));
 const body_parser_1 = __importDefault(require("body-parser"));
+const routes_user_1 = __importDefault(require("./routes/routes-user"));
 const app = express_1.default();
 const rootDir = path_1.default.dirname(process.mainModule.filename);
 app.use(express_1.default.static(path_1.default.join(rootDir, 'public')));
 app.use(body_parser_1.default.urlencoded({ extended: false }));
 app.set('view engine', 'pug');
 app.set('views', 'src/views');
+app.use('/', routes_user_1.default);
 app.get('/', (req, res, next) => {
     res.render('home');
 });
