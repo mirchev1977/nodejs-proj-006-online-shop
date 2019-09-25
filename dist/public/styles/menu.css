@@ -23,3 +23,9 @@
 .main-layout__menu li.active {
     background-color: yellow;
 }
+
+#err {
+    text-align:  center;
+    font-weight: bold;
+    color:     red;
+}
