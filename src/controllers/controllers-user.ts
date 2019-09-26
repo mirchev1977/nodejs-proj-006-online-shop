@@ -1,4 +1,4 @@
-import User from '../entities/entities-user';
+import User from '../models/models-user';
 
 export function getUsrRegister ( req, res, next ) {
     res.render( 'user/register', { usr: {} } );
