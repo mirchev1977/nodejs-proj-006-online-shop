@@ -1,3 +1,5 @@
+import UserRepo from "../repositories/repositories-user";
+
 export default class User {
     private _names:    string;
     private _email:    string;
@@ -12,7 +14,28 @@ export default class User {
         this.names    = names;
         this.email    = email;
         this.password = password; 
+
+        return this;
     }
+
+    create(): Promise<User> {
+        const promise: Promise<User> = new Promise( ( resolve, reject ) => {
+            UserRepo.create( {
+                names:    this._names,
+                email:    this._email,
+                password: this.password
+            } ).then( usr => {
+                console.log( 'User Created: ', usr );
+                resolve( this );
+            } ).catch( err => {
+                console.log( 'User cannot be created...', err );
+                reject( 'User cannot be created...' );
+            } );
+        } );
+
+        return promise;
+    }
+
     set names ( names: string ) {
         if ( names.length < 2 ) {
             throw new Error( "Name should be longer and equal to 2 characters." );

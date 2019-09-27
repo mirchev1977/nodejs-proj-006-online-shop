@@ -3,15 +3,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const entities_user_1 = __importDefault(require("../entities/entities-user"));
+const models_user_1 = __importDefault(require("../models/models-user"));
 function getUsrRegister(req, res, next) {
     res.render('user/register', { usr: {} });
 }
 exports.getUsrRegister = getUsrRegister;
 function postUsrRegister(req, res, next) {
     try {
-        const user = new entities_user_1.default(req.body['names'], req.body['email'], req.body['password'], req.body['password_repeat']);
-        res.render('user/registered');
+        new models_user_1.default(req.body['names'], req.body['email'], req.body['password'], req.body['password_repeat']).create().then(usr => {
+            res.render('user/registered');
+        }).catch(errMessage => {
+            res.render('user/register', { usr: req.body, ERR: errMessage });
+        });
     }
     catch (errMsg) {
         res.render('user/register', { usr: req.body, ERR: errMsg });

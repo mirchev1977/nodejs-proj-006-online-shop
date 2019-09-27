@@ -6,14 +6,16 @@ export function getUsrRegister ( req, res, next ) {
 
 export function postUsrRegister ( req, res, next ) {
     try {
-        const user = new User( 
+        new User( 
                 req.body[ 'names'           ],
                 req.body[ 'email'           ],
                 req.body[ 'password'        ],
                 req.body[ 'password_repeat' ]
-            );
-
-        res.render( 'user/registered' );
+            ).create().then( usr => {
+                res.render( 'user/registered' );
+            } ).catch( errMessage => {
+                res.render( 'user/register', { usr: req.body, ERR: errMessage } );
+            } ); 
     } catch( errMsg ) {
         res.render( 'user/register', { usr: req.body, ERR: errMsg } );
     }
