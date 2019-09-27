@@ -21,8 +21,8 @@ export default class User {
     create(): Promise<User> {
         const promise: Promise<User> = new Promise( ( resolve, reject ) => {
             UserRepo.create( {
-                names:    this._names,
-                email:    this._email,
+                names:    this.names,
+                email:    this.email,
                 password: this.password
             } ).then( usr => {
                 console.log( 'User Created: ', usr );

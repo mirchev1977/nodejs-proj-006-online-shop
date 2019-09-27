@@ -17,8 +17,8 @@ class User {
     create() {
         const promise = new Promise((resolve, reject) => {
             repositories_user_1.default.create({
-                names: this._names,
-                email: this._email,
+                names: this.names,
+                email: this.email,
                 password: this.password
             }).then(usr => {
                 console.log('User Created: ', usr);
