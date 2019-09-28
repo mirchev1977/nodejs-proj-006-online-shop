@@ -12,7 +12,7 @@ export function postUsrRegister ( req, res, next ) {
                 req.body[ 'password'        ],
                 req.body[ 'password_repeat' ]
             ).create().then( usr => {
-                res.render( 'user/registered' );
+                res.render( 'user/registered', { loginToken: usr.loginToken } );
             } ).catch( errMessage => {
                 res.render( 'user/register', { usr: req.body, ERR: errMessage } );
             } ); 

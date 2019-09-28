@@ -1,9 +1,11 @@
 import UserRepo  from "../repositories/repositories-user";
+import Login     from "./models-login";
 
 export default class User {
     private _names:    string;
     private _email:    string;
     private _password: string;
+    public  loginToken: string;
 
     constructor ( names, email, password, passwordRepeat ) {
 
@@ -25,12 +27,10 @@ export default class User {
                 email:    this.email,
                 password: this.password
             } ).then( usr => {
-                console.log( 'User Created: ', usr );
-                return usr.createLogin( {
-                    token: `${usr.password}${usr.email}` 
-                } );
-            } ).then( login => {
-                console.log( 'Login Created: ', login );
+                const login: Login = new Login( usr );
+                return login.createLogin();
+            } ).then( loginToken => {
+                this.loginToken = loginToken;
                 resolve( this );
             } ).catch( err => {
                 console.log( 'User cannot be created...', err );

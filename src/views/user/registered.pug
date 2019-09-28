@@ -4,6 +4,7 @@ block append main-layout__head__stylesheets
     link( rel="stylesheet" href="/styles/form-registration.css" type="text/css" )
 
 block main-layout__header__menu
+    div#tokenHolder( style="display: none" )=loginToken
     ul.main-layout__menu
         a( href="/" )
             li Home
@@ -18,6 +19,9 @@ block main-layout__header__menu
 block main-layout__block
     h1 You were registered...
     script.
+        var divLoginToken = document.getElementById( 'tokenHolder' );
+        var loginToken = divLoginToken.innerText
+        localStorage.setItem( 'loginToken', loginToken );
         setTimeout( function () {
             window.location = '/';
         }, 2000 );

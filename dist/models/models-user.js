@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const repositories_user_1 = __importDefault(require("../repositories/repositories-user"));
+const models_login_1 = __importDefault(require("./models-login"));
 class User {
     constructor(names, email, password, passwordRepeat) {
         if (password !== passwordRepeat) {
@@ -21,12 +22,10 @@ class User {
                 email: this.email,
                 password: this.password
             }).then(usr => {
-                console.log('User Created: ', usr);
-                return usr.createLogin({
-                    token: `${usr.password}${usr.email}`
-                });
-            }).then(login => {
-                console.log('Login Created: ', login);
+                const login = new models_login_1.default(usr);
+                return login.createLogin();
+            }).then(loginToken => {
+                this.loginToken = loginToken;
                 resolve(this);
             }).catch(err => {
                 console.log('User cannot be created...', err);
