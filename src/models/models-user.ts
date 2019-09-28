@@ -1,4 +1,4 @@
-import UserRepo from "../repositories/repositories-user";
+import UserRepo  from "../repositories/repositories-user";
 
 export default class User {
     private _names:    string;
@@ -26,6 +26,11 @@ export default class User {
                 password: this.password
             } ).then( usr => {
                 console.log( 'User Created: ', usr );
+                return usr.createLogin( {
+                    token: `${usr.password}${usr.email}` 
+                } );
+            } ).then( login => {
+                console.log( 'Login Created: ', login );
                 resolve( this );
             } ).catch( err => {
                 console.log( 'User cannot be created...', err );

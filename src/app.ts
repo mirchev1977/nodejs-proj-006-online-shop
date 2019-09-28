@@ -7,6 +7,7 @@ import bodyParser from 'body-parser';
 import rootDir    from './utils/root-dir';
 import routesUser from './routes/routes-user';
 const sequelize = require( './utils/database' );
+import repositories from './repositories/repositories';
 
 const app = express();
 
@@ -15,6 +16,8 @@ app.use( bodyParser.urlencoded( { extended: false }      ) );
 
 app.set( 'view engine', 'pug'       );
 app.set( 'views',       'src/views' );
+
+repositories();
 
 app.use( '/', routesUser );
 
