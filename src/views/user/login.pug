@@ -20,13 +20,13 @@ block main-layout__header__err
 
 block main-layout__block
     h1 Register
-    form( method="POST" action="/login" class="form-registration" )
-        div( class="form-registration_field" )
+    form( method="POST" action="/login" class="form-reg-log" )
+        div( class="form-reg-log_field" )
             label( for="email" ) Email*
             input( type="text" name="email" id="email" value=`${usr['email'] || ''}`)
-        div( class="form-registration_field" )
+        div( class="form-reg-log_field" )
             label( for="password" ) Password*
             input( type="password" name="password" id="password" )
-        div( class="form-registration_field submit" )
+        div( class="form-reg-log_field submit" )
             label( for="password_repeat" ) 
             button( type="submit" ) Submit
