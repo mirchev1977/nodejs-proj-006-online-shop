@@ -21,4 +21,8 @@ function postUsrRegister(req, res, next) {
     }
 }
 exports.postUsrRegister = postUsrRegister;
+function getUsrLogin(req, res, next) {
+    res.render('user/login', { usr: {} });
+}
+exports.getUsrLogin = getUsrLogin;
 //# sourceMappingURL=controllers-user.js.map

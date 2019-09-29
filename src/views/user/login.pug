@@ -9,9 +9,9 @@ block main-layout__header__menu
             li Home
         div
         a( href="/register" )
-            li( class="active" ) Register
+            li Register
         a( href="/login" )
-            li Login
+            li( class="active" ) Login
         a( href="/logout" )
             li Logout
 
@@ -20,19 +20,13 @@ block main-layout__header__err
 
 block main-layout__block
     h1 Register
-    form( method="POST" action="/register" class="form-registration" )
-        div( class="form-registration_field" )
-            label( for="names" ) Your Names*
-            input( type="text" name="names" id="names" value=`${usr['names'] || '' }` )
+    form( method="POST" action="/login" class="form-registration" )
         div( class="form-registration_field" )
             label( for="email" ) Email*
             input( type="text" name="email" id="email" value=`${usr['email'] || ''}`)
         div( class="form-registration_field" )
             label( for="password" ) Password*
             input( type="password" name="password" id="password" )
-        div( class="form-registration_field" )
-            label( for="password_repeat" ) Password Repeat*
-            input( type="password" name="password_repeat" id="password_repeat" )
         div( class="form-registration_field submit" )
             label( for="password_repeat" ) 
             button( type="submit" ) Submit

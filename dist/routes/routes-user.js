@@ -15,5 +15,6 @@ const controllersUser = __importStar(require("../controllers/controllers-user"))
 const router = express_1.default.Router();
 router.get('/register', controllersUser.getUsrRegister);
 router.post('/register', controllersUser.postUsrRegister);
+router.get('/login', controllersUser.getUsrLogin);
 exports.default = router;
 //# sourceMappingURL=routes-user.js.map

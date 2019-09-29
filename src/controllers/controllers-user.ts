@@ -20,3 +20,7 @@ export function postUsrRegister ( req, res, next ) {
         res.render( 'user/register', { usr: req.body, ERR: errMsg } );
     }
 }
+
+export function getUsrLogin ( req, res, next ) {
+    res.render( 'user/login', { usr: {} } );
+}
