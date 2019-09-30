@@ -34,6 +34,27 @@ class User {
         });
         return promise;
     }
+    static findByEmailPassword(email, password) {
+        const promise = new Promise((resolve, reject) => {
+            let userCreated;
+            repositories_user_1.default.findAll({
+                where: {
+                    email: email,
+                    password: password
+                }
+            }).then(user => {
+                userCreated = new User(user[0].names, user[0].email, user[0].password, user[0].password);
+                const login = new models_login_1.default(user[0]);
+                return login.createLogin();
+            }).then(loginToken => {
+                userCreated.loginToken = loginToken;
+                resolve(userCreated);
+            }).catch(err => {
+                reject(err);
+            });
+        });
+        return promise;
+    }
     set names(names) {
         if (names.length < 2) {
             throw new Error("Name should be longer and equal to 2 characters.");

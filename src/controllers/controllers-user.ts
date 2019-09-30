@@ -24,3 +24,16 @@ export function postUsrRegister ( req, res, next ) {
 export function getUsrLogin ( req, res, next ) {
     res.render( 'user/login', { usr: {} } );
 }
+
+export function postUsrLogin ( req, res, next ) {
+    User.findByEmailPassword(
+        req.body[ 'email'    ],
+        req.body[ 'password' ]
+    ).then( user => {
+        console.log( 'FindAllUser: ', user );
+        res.render( 'user/loggedIn', { loginToken: user.loginToken } );
+    } ).catch( errMessage => {
+        errMessage = 'Wrong Username or Password...';
+        res.render( 'user/login', { usr: req.body, ERR: errMessage } );
+    } );
+}

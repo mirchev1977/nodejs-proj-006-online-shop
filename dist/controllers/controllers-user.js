@@ -25,4 +25,14 @@ function getUsrLogin(req, res, next) {
     res.render('user/login', { usr: {} });
 }
 exports.getUsrLogin = getUsrLogin;
+function postUsrLogin(req, res, next) {
+    models_user_1.default.findByEmailPassword(req.body['email'], req.body['password']).then(user => {
+        console.log('FindAllUser: ', user);
+        res.render('user/loggedIn', { loginToken: user.loginToken });
+    }).catch(errMessage => {
+        errMessage = 'Wrong Username or Password...';
+        res.render('user/login', { usr: req.body, ERR: errMessage });
+    });
+}
+exports.postUsrLogin = postUsrLogin;
 //# sourceMappingURL=controllers-user.js.map

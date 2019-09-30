@@ -1,0 +1,27 @@
+extends ../main-layout.pug
+
+block append main-layout__head__stylesheets
+    link( rel="stylesheet" href="/styles/form-reg-log.css" type="text/css" )
+
+block main-layout__header__menu
+    div#tokenHolder( style="display: none" )=loginToken
+    ul.main-layout__menu
+        a( href="/" )
+            li Home
+        div
+        a( href="/register" )
+            li Register
+        a( href="/login" )
+            li( class="active" ) Login
+        a( href="/logout" )
+            li Logout
+
+block main-layout__block
+    h1 You are now logged in...
+    script.
+        var divLoginToken = document.getElementById( 'tokenHolder' );
+        var loginToken = divLoginToken.innerText
+        localStorage.setItem( 'loginToken', loginToken );
+        setTimeout( function () {
+            window.location = '/';
+        }, 2000 );

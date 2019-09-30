@@ -41,6 +41,32 @@ export default class User {
         return promise;
     }
 
+    static findByEmailPassword ( email: string, password: string ): Promise<User> {
+        const promise: Promise<User> = new Promise( ( resolve, reject ) => {
+            let userCreated: User;
+            UserRepo.findAll( {
+                where: {
+                    email: email,
+                    password: password
+                }
+            } ).then( user => {
+                userCreated = new User( 
+                        user[0].names,    user[0].email, 
+                        user[0].password, user[0].password
+                    );
+                const login: Login = new Login( user[0] );
+                return login.createLogin();
+            } ).then( loginToken => {
+                userCreated.loginToken = loginToken;
+                resolve( userCreated );
+            } ).catch( err => {
+                reject( err );
+            } );
+        } );
+
+        return promise;
+    }
+
     set names ( names: string ) {
         if ( names.length < 2 ) {
             throw new Error( "Name should be longer and equal to 2 characters." );
