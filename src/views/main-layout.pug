@@ -3,12 +3,6 @@ block main-layout__head
         block main-layout__head__stylesheets
             link( rel="stylesheet" href="/styles/menu.css" type="text/css" )
 block main-layout__header
-    block main-layout__header__user-logged-in
-        if _g.userNames
-            p.main-layout__user-logged-in
-                span Hello, 
-                span=`${_g.userNames}, `
-                span=_g.userRole
     block main-layout__header__menu
         ul.main-layout__menu
             a( href="/" )
