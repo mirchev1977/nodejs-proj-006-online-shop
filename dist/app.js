@@ -16,6 +16,18 @@ app.use(body_parser_1.default.urlencoded({ extended: false }));
 app.set('view engine', 'pug');
 app.set('views', 'src/views');
 repositories_1.default();
+// make user authentication
+app.use((req, res, next) => {
+    debugger;
+    if (!req.query['loginToken']) {
+        debugger;
+        res.render('user/loggedIn', { usr: {}, path: req.path });
+    }
+    else {
+        debugger;
+        next();
+    }
+});
 app.use('/', routes_user_1.default);
 app.get('/', (req, res, next) => {
     res.render('home');

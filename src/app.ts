@@ -19,6 +19,15 @@ app.set( 'views',       'src/views' );
 
 repositories();
 
+// make user authentication
+app.use( ( req, res, next ) => {
+    if ( !req.query[ 'loginToken' ] ) {
+        res.render( 'user/loggedIn', { usr: {}, path: req.path } );
+    } else {
+        next();
+    }
+} );
+
 app.use( '/', routesUser );
 
 app.get( '/', ( req, res, next ) => {
