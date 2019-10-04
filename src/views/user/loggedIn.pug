@@ -22,17 +22,22 @@ block main-layout__block
     script.
         var divLoginToken = document.getElementById( 'tokenHolder' );
         var divPath       = document.getElementById( 'pathHolder' );
+
         var loginToken = divLoginToken.innerText;
         var path       = divPath.innerText.trim() || '/';
+
         if ( loginToken ) {
             localStorage.setItem( 'loginToken', loginToken );
         } else {
             loginToken = localStorage.getItem( 'loginToken' );
         }
-        setTimeout( function () {
-            if ( loginToken ) {
-                window.location = `${path}?loginToken=` + loginToken;
+
+        if ( loginToken ) {
+            if ( path.match( /\?/ ) ) {
+                window.location = `${path}`;
             } else {
-                window.location = `${path}`; 
+                window.location = `${path}`;
             }
-        }, 2000 );
+        } else {
+            window.location = `${path}`; 
+        }

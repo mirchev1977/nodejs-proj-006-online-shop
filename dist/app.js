@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const path_1 = __importDefault(require("path"));
 const body_parser_1 = __importDefault(require("body-parser"));
+const express_session_1 = __importDefault(require("express-session"));
 const root_dir_1 = __importDefault(require("./utils/root-dir"));
 const routes_user_1 = __importDefault(require("./routes/routes-user"));
 const sequelize = require('./utils/database');
@@ -16,16 +17,17 @@ app.use(body_parser_1.default.urlencoded({ extended: false }));
 app.set('view engine', 'pug');
 app.set('views', 'src/views');
 repositories_1.default();
+app.use(express_session_1.default({ secret: 'one' }));
 // make user authentication
 app.use((req, res, next) => {
-    debugger;
-    if (!req.query['loginToken']) {
-        debugger;
-        res.render('user/loggedIn', { usr: {}, path: req.path });
+    if ((req['session']
+        && req['session']['loginToken'])
+        || (req.body['email'] && req.body['password'])) {
+        console.log(req['session']['loginToken']);
+        next();
     }
     else {
-        debugger;
-        next();
+        res.render('user/login', { usr: {} });
     }
 });
 app.use('/', routes_user_1.default);

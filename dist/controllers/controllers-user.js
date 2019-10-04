@@ -27,6 +27,7 @@ function getUsrLogin(req, res, next) {
 exports.getUsrLogin = getUsrLogin;
 function postUsrLogin(req, res, next) {
     models_user_1.default.findByEmailPassword(req.body['email'], req.body['password']).then(user => {
+        req.session['loginToken'] = user.loginToken;
         console.log('FindAllUser: ', user);
         res.render('user/loggedIn', { loginToken: user.loginToken });
     }).catch(errMessage => {
