@@ -3,6 +3,7 @@
 import express    from 'express';
 import path       from 'path';
 import bodyParser from 'body-parser';
+import session from 'express-session';
 
 import rootDir    from './utils/root-dir';
 import routesUser from './routes/routes-user';
@@ -19,12 +20,21 @@ app.set( 'views',       'src/views' );
 
 repositories();
 
+app.use( session( { secret: 'one' } ) );
+
 // make user authentication
 app.use( ( req, res, next ) => {
-    if ( !req.query[ 'loginToken' ] ) {
-        res.render( 'user/loggedIn', { usr: {}, path: req.path } );
-    } else {
+    if ( 
+        ( req[ 'session' ]
+        
+        && req[ 'session' ][ 'loginToken' ] )
+        || ( req.body[ 'email' ] && req.body[ 'password' ] )
+    ) {
+        console.log( req[ 'session' ][ 'loginToken' ] );
         next();
+    }
+    else { 
+        res.render( 'user/login', { usr: {} } );
     }
 } );
 
