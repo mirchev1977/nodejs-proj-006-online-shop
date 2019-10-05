@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const repositories_user_1 = __importDefault(require("../repositories/repositories-user"));
+const repositories_login_1 = __importDefault(require("../repositories/repositories-login"));
 const models_login_1 = __importDefault(require("./models-login"));
 class User {
     constructor(names, email, password, passwordRepeat) {
@@ -51,6 +52,23 @@ class User {
                 resolve(userCreated);
             }).catch(err => {
                 reject(err);
+            });
+        });
+        return promise;
+    }
+    static findByToken(token) {
+        const promise = new Promise((resolve, reject) => {
+            repositories_user_1.default.findAll({
+                include: [{
+                        model: repositories_login_1.default,
+                        where: { token: token }
+                    }]
+            }).then(usrsArr => {
+                const usr = usrsArr[0];
+                const user = new User(usr.names, usr.email, usr.password, usr.password);
+                resolve(user);
+            }).catch(err => {
+                reject('There is no such user...');
             });
         });
         return promise;

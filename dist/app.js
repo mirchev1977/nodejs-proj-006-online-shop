@@ -11,6 +11,7 @@ const root_dir_1 = __importDefault(require("./utils/root-dir"));
 const routes_user_1 = __importDefault(require("./routes/routes-user"));
 const sequelize = require('./utils/database');
 const repositories_1 = __importDefault(require("./repositories/repositories"));
+const models_user_1 = __importDefault(require("./models/models-user"));
 const app = express_1.default();
 app.use(express_1.default.static(path_1.default.join(root_dir_1.default, 'public')));
 app.use(body_parser_1.default.urlencoded({ extended: false }));
@@ -23,8 +24,17 @@ app.use((req, res, next) => {
     if ((req['session']
         && req['session']['loginToken'])
         || (req.body['email'] && req.body['password'])) {
-        console.log(req['session']['loginToken']);
-        next();
+        if (req.body['email'] && req.body['password']) {
+            next();
+        }
+        else {
+            models_user_1.default.findByToken(req['session']['loginToken']).then(user => {
+                req['userLogged'] = user;
+                next();
+            }).catch(str => {
+                debugger;
+            });
+        }
     }
     else {
         res.render('user/login', { usr: {} });

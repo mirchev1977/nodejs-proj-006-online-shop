@@ -9,6 +9,7 @@ import rootDir    from './utils/root-dir';
 import routesUser from './routes/routes-user';
 const sequelize = require( './utils/database' );
 import repositories from './repositories/repositories';
+import User from './models/models-user';
 
 const app = express();
 
@@ -29,8 +30,16 @@ app.use( ( req, res, next ) => {
         && req[ 'session' ][ 'loginToken' ] )
         || ( req.body[ 'email' ] && req.body[ 'password' ] )
     ) {
-        console.log( req[ 'session' ][ 'loginToken' ] );
-        next();
+        if ( req.body[ 'email' ] && req.body[ 'password' ] ) {
+            next();
+        } else {
+            User.findByToken( req[ 'session' ][ 'loginToken' ] ).then( user => {
+                req[ 'userLogged' ] = user;
+                next();
+            } ).catch( str => {
+                debugger;
+            } );
+        }
     }
     else { 
         res.render( 'user/login', { usr: {} } );

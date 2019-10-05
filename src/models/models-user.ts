@@ -1,5 +1,7 @@
 import UserRepo  from "../repositories/repositories-user";
+import LoginRepo  from "../repositories/repositories-login";
 import Login     from "./models-login";
+import { promises } from "dns";
 
 export default class User {
     private _names:    string;
@@ -61,6 +63,28 @@ export default class User {
                 resolve( userCreated );
             } ).catch( err => {
                 reject( err );
+            } );
+        } );
+
+        return promise;
+    }
+
+    static findByToken ( token: string ): Promise<User> {
+        const promise: Promise<User> = new Promise( ( resolve, reject ) => {
+            UserRepo.findAll( {
+                include: [ {
+                    model: LoginRepo,
+                    where: { token: token }
+                } ]
+            } ).then( usrsArr => {
+                const usr = usrsArr[0];
+                const user = new User( usr.names
+                    , usr.email
+                    , usr.password
+                    , usr.password );
+                resolve( user );
+            } ).catch( err => {
+                reject( 'There is no such user...' );
             } );
         } );
 
