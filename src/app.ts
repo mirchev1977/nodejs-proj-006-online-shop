@@ -3,13 +3,13 @@
 import express    from 'express';
 import path       from 'path';
 import bodyParser from 'body-parser';
-import session from 'express-session';
+import session     from 'express-session';
 
-import rootDir    from './utils/root-dir';
-import routesUser from './routes/routes-user';
-const sequelize = require( './utils/database' );
+import rootDir      from './utils/root-dir';
+import routesUser   from './routes/routes-user';
+const sequelize     = require( './utils/database' );
 import repositories from './repositories/repositories';
-import User from './models/models-user';
+import settings from './utils/settings';
 
 const app = express();
 
@@ -24,27 +24,7 @@ repositories();
 app.use( session( { secret: 'one' } ) );
 
 // make user authentication
-app.use( ( req, res, next ) => {
-    if ( 
-        ( req[ 'session' ]
-        && req[ 'session' ][ 'loginToken' ] )
-        || ( req.body[ 'email' ] && req.body[ 'password' ] )
-    ) {
-        if ( req.body[ 'email' ] && req.body[ 'password' ] ) {
-            next();
-        } else {
-            User.findByToken( req[ 'session' ][ 'loginToken' ] ).then( user => {
-                req[ 'userLogged' ] = user;
-                next();
-            } ).catch( str => {
-                debugger;
-            } );
-        }
-    }
-    else { 
-        res.render( 'user/login', { usr: {} } );
-    }
-} );
+app.use( settings.userLogin );
 
 app.use( '/', routesUser );
 

@@ -11,7 +11,7 @@ const root_dir_1 = __importDefault(require("./utils/root-dir"));
 const routes_user_1 = __importDefault(require("./routes/routes-user"));
 const sequelize = require('./utils/database');
 const repositories_1 = __importDefault(require("./repositories/repositories"));
-const models_user_1 = __importDefault(require("./models/models-user"));
+const settings_1 = __importDefault(require("./utils/settings"));
 const app = express_1.default();
 app.use(express_1.default.static(path_1.default.join(root_dir_1.default, 'public')));
 app.use(body_parser_1.default.urlencoded({ extended: false }));
@@ -20,26 +20,7 @@ app.set('views', 'src/views');
 repositories_1.default();
 app.use(express_session_1.default({ secret: 'one' }));
 // make user authentication
-app.use((req, res, next) => {
-    if ((req['session']
-        && req['session']['loginToken'])
-        || (req.body['email'] && req.body['password'])) {
-        if (req.body['email'] && req.body['password']) {
-            next();
-        }
-        else {
-            models_user_1.default.findByToken(req['session']['loginToken']).then(user => {
-                req['userLogged'] = user;
-                next();
-            }).catch(str => {
-                debugger;
-            });
-        }
-    }
-    else {
-        res.render('user/login', { usr: {} });
-    }
-});
+app.use(settings_1.default.userLogin);
 app.use('/', routes_user_1.default);
 app.get('/', (req, res, next) => {
     res.render('home');
