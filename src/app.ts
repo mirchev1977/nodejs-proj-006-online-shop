@@ -26,7 +26,6 @@ app.use( session( { secret: 'one' } ) );
 app.use( ( req, res, next ) => {
     if ( 
         ( req[ 'session' ]
-        
         && req[ 'session' ][ 'loginToken' ] )
         || ( req.body[ 'email' ] && req.body[ 'password' ] )
     ) {
