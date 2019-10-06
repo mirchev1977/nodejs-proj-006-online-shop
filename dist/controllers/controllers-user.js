@@ -4,7 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const models_user_1 = __importDefault(require("../models/models-user"));
+const access_controller_1 = __importDefault(require("../utils/access_controller"));
 function getUsrRegister(req, res, next) {
+    access_controller_1.default(req, res, next, { isLogged: true, role: 'admin' });
     res.render('user/register', { usr: {} });
 }
 exports.getUsrRegister = getUsrRegister;
@@ -28,7 +30,6 @@ exports.getUsrLogin = getUsrLogin;
 function postUsrLogin(req, res, next) {
     models_user_1.default.findByEmailPassword(req.body['email'], req.body['password']).then(user => {
         req.session['loginToken'] = user.loginToken;
-        console.log('FindAllUser: ', user);
         res.render('user/loggedIn', { loginToken: user.loginToken });
     }).catch(errMessage => {
         errMessage = 'Wrong Username or Password...';

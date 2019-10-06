@@ -1,6 +1,9 @@
 import User from '../models/models-user';
+import accessController from '../utils/access_controller';
 
 export function getUsrRegister ( req, res, next ) {
+    accessController( req, res, next, { isLogged: true
+        , roles: { admin: 1 } } );
     res.render( 'user/register', { usr: {} } );
 }
 
