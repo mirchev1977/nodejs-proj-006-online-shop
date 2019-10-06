@@ -10,7 +10,8 @@ const User = sequelize.define('user', {
         primaryKey: true, allowNull: false },
     names: sequelize_1.default.STRING,
     email: { type: sequelize_1.default.STRING, allowNull: false },
-    password: { type: sequelize_1.default.STRING, allowNull: false }
+    password: { type: sequelize_1.default.STRING, allowNull: false },
+    role: { type: sequelize_1.default.STRING, allowNull: false }
 });
 exports.default = User;
 //# sourceMappingURL=repositories-user.js.map

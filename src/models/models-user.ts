@@ -4,10 +4,11 @@ import Login     from "./models-login";
 import { promises } from "dns";
 
 export default class User {
-    private _names:    string;
-    private _email:    string;
-    private _password: string;
+    private _names:     string;
+    private _email:     string;
+    private _password:  string;
     public  loginToken: string;
+    private _role:      string;
 
     constructor ( names, email, password, passwordRepeat ) {
 
@@ -18,6 +19,7 @@ export default class User {
         this.names    = names;
         this.email    = email;
         this.password = password; 
+        this.role     = 'user';
 
         return this;
     }
@@ -27,7 +29,8 @@ export default class User {
             UserRepo.create( {
                 names:    this.names,
                 email:    this.email,
-                password: this.password
+                password: this.password,
+                role:     this.role,
             } ).then( usr => {
                 const login: Login = new Login( usr );
                 return login.createLogin();
@@ -114,6 +117,14 @@ export default class User {
     get email (): string {
         return this._email;
     } 
+
+    set role ( role: string ) {
+        this._role = role;
+    }
+
+    get role (): string {
+        return this._role;
+    }
 
     set password ( password: string ) {
         if ( password.length < 5 ) {

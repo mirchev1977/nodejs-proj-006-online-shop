@@ -6,7 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const models_user_1 = __importDefault(require("../models/models-user"));
 const access_controller_1 = __importDefault(require("../utils/access_controller"));
 function getUsrRegister(req, res, next) {
-    access_controller_1.default(req, res, next, { isLogged: true, role: 'admin' });
+    access_controller_1.default(req, res, next, { isLogged: true,
+        roles: { admin: 1 } });
     res.render('user/register', { usr: {} });
 }
 exports.getUsrRegister = getUsrRegister;

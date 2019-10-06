@@ -14,6 +14,7 @@ class User {
         this.names = names;
         this.email = email;
         this.password = password;
+        this.role = 'user';
         return this;
     }
     create() {
@@ -21,7 +22,8 @@ class User {
             repositories_user_1.default.create({
                 names: this.names,
                 email: this.email,
-                password: this.password
+                password: this.password,
+                role: this.role,
             }).then(usr => {
                 const login = new models_login_1.default(usr);
                 return login.createLogin();
@@ -90,6 +92,12 @@ class User {
     }
     get email() {
         return this._email;
+    }
+    set role(role) {
+        this._role = role;
+    }
+    get role() {
+        return this._role;
     }
     set password(password) {
         if (password.length < 5) {
