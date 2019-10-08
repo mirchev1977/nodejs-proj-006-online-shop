@@ -4,7 +4,12 @@ import accessController from '../utils/access_controller';
 export function getUsrRegister ( req, res, next ) {
     accessController( req, res, next, { isLogged: true
         , roles: { admin: 1 } } );
-    res.render( 'user/register', { usr: {} } );
+
+    let userEmail;
+    if ( req[ 'userLogged' ] ) {
+        userEmail = req[ 'userLogged' ][ 'email' ];
+    }
+    res.render( 'user/register', { usr: {}, userEmail: userEmail } );
 }
 
 export function postUsrRegister ( req, res, next ) {
@@ -25,7 +30,11 @@ export function postUsrRegister ( req, res, next ) {
 }
 
 export function getUsrLogin ( req, res, next ) {
-    res.render( 'user/login', { usr: {} } );
+    let userEmail;
+    if ( req[ 'userLogged' ] ) {
+        userEmail = req[ 'userLogged' ][ 'email' ];
+    }
+    res.render( 'user/login', { usr: {}, userEmail: userEmail } );
 }
 
 export function postUsrLogin ( req, res, next ) {

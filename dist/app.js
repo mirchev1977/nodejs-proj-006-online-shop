@@ -23,10 +23,18 @@ app.use(express_session_1.default({ secret: 'one' }));
 app.use(settings_1.default.userLogin);
 app.use('/', routes_user_1.default);
 app.get('/', (req, res, next) => {
-    res.render('home');
+    let userEmail;
+    if (req['userLogged']) {
+        userEmail = req['userLogged']['email'];
+    }
+    res.render('home', { userEmail: userEmail });
 });
 app.use((req, res, next) => {
-    res.render('404');
+    let userEmail;
+    if (req['userLogged']) {
+        userEmail = req['userLogged']['email'];
+    }
+    res.render('404', { userEmail: userEmail });
 });
 sequelize.sync().then(result => {
     app.listen(process.env.PORT || 3000, () => {

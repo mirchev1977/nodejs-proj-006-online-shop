@@ -8,7 +8,11 @@ const access_controller_1 = __importDefault(require("../utils/access_controller"
 function getUsrRegister(req, res, next) {
     access_controller_1.default(req, res, next, { isLogged: true,
         roles: { admin: 1 } });
-    res.render('user/register', { usr: {} });
+    let userEmail;
+    if (req['userLogged']) {
+        userEmail = req['userLogged']['email'];
+    }
+    res.render('user/register', { usr: {}, userEmail: userEmail });
 }
 exports.getUsrRegister = getUsrRegister;
 function postUsrRegister(req, res, next) {
@@ -25,7 +29,11 @@ function postUsrRegister(req, res, next) {
 }
 exports.postUsrRegister = postUsrRegister;
 function getUsrLogin(req, res, next) {
-    res.render('user/login', { usr: {} });
+    let userEmail;
+    if (req['userLogged']) {
+        userEmail = req['userLogged']['email'];
+    }
+    res.render('user/login', { usr: {}, userEmail: userEmail });
 }
 exports.getUsrLogin = getUsrLogin;
 function postUsrLogin(req, res, next) {
