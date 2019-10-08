@@ -34,7 +34,8 @@ export function postUsrLogin ( req, res, next ) {
         req.body[ 'password' ]
     ).then( user => {
         req.session[ 'loginToken' ] = user.loginToken;
-        res.render( 'user/loggedIn', { loginToken: user.loginToken } );
+        res.render( 'user/loggedIn', { loginToken: user.loginToken
+            , path: req.body[ 'path' ] } );
     } ).catch( errMessage => {
         errMessage = 'Wrong Username or Password...';
         res.render( 'user/login', { usr: req.body, ERR: errMessage } );

@@ -21,6 +21,7 @@ block main-layout__header__err
 block main-layout__block
     h1 Register
     form( method="POST" action="/login" class="form-reg-log" )
+        input( type="hidden" name="path" id="path" value=`${path}`)
         div( class="form-reg-log_field" )
             label( for="email" ) Email*
             input( type="text" name="email" id="email" value=`${usr['email'] || ''}`)

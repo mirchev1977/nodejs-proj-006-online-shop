@@ -31,7 +31,8 @@ exports.getUsrLogin = getUsrLogin;
 function postUsrLogin(req, res, next) {
     models_user_1.default.findByEmailPassword(req.body['email'], req.body['password']).then(user => {
         req.session['loginToken'] = user.loginToken;
-        res.render('user/loggedIn', { loginToken: user.loginToken });
+        res.render('user/loggedIn', { loginToken: user.loginToken,
+            path: req.body['path'] });
     }).catch(errMessage => {
         errMessage = 'Wrong Username or Password...';
         res.render('user/login', { usr: req.body, ERR: errMessage });
