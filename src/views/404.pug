@@ -1,1 +1,19 @@
-h1 Sorry... There is no such page...
+extends ./main-layout.pug
+
+block main-layout__header
+    block main-layout__header__menu
+        ul.main-layout__menu
+            a( href="/" )
+                li Home
+            div
+            a( href="/register" )
+                li Register
+            a( href="/login" )
+                li Login
+            a( href="/logout" )
+                li Logout
+    block main-layout__header__err
+        div#err
+
+block main-layout__block
+    h1 Sorry... There is no such page...
