@@ -6,19 +6,8 @@ block append main-layout__head__stylesheets
 block main-layout__header__menu
     div#tokenHolder( style="display: none" )=loginToken
     div#pathHolder( style="display: none" )=path
-    ul.main-layout__menu
-        a( href="/" )
-            li Home
-        include ../includes/menu-user-logged-out.pug
-        include ../includes/menu-user-logged-in.pug
-        div
-        a( href="/register" )
-            li Register
-        a( href="/login" )
-            li( class="active" ) Login
-        a( href="/logout" )
-            li Logout
-
+    include ../includes/menu-user-logged-out.pug
+    include ../includes/menu-user-logged-in.pug
 block main-layout__block
     h1 You are now logged in...
     script.

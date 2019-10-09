@@ -4,23 +4,6 @@ block main-layout__head
             link( rel="stylesheet" href="/styles/menu.css" type="text/css" )
 block main-layout__header
     block main-layout__header__menu
-        ul.main-layout__menu
-            a( href="/" )
-                li Home
-            if userEmail
-                a( href="/product/new" )
-                    li Add Product
-                    style.
-                        .main-layout__menu {
-                            grid-template-columns: 100px 120px 1fr 100px 100px 100px;
-                        }
-            div
-            a( href="/register" )
-                li Register
-            a( href="/login" )
-                li Login
-            a( href="/logout" )
-                li Logout
     block main-layout__header__err
         div#err
 block main-layout__block

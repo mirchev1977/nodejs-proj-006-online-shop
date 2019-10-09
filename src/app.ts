@@ -29,20 +29,12 @@ app.use( settings.userLogin );
 app.use( '/', routesUser );
 
 app.get( '/', ( req, res, next ) => {
-    let userEmail;
-    if ( req[ 'userLogged' ] ) {
-        userEmail = req[ 'userLogged' ][ 'email' ];
-    }
-    res.render( 'home', { userEmail: userEmail } );
+    res.render( 'home', { userLogged: req[ 'userLogged' ] } );
 } );
 
 
 app.use( ( req, res, next ) => {
-    let userEmail;
-    if ( req[ 'userLogged' ] ) {
-        userEmail = req[ 'userLogged' ][ 'email' ];
-    }
-    res.render( '404', { userEmail: userEmail } );
+    res.render( '404', { userLogged: req[ 'userLogged' ] } );
 } );
 
 sequelize.sync().then( result => {

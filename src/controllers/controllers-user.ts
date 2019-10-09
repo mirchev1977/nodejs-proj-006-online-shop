@@ -5,11 +5,7 @@ export function getUsrRegister ( req, res, next ) {
     accessController( req, res, next, { isLogged: true
         , roles: { admin: 1 } } );
 
-    let userEmail;
-    if ( req[ 'userLogged' ] ) {
-        userEmail = req[ 'userLogged' ][ 'email' ];
-    }
-    res.render( 'user/register', { usr: {}, userEmail: userEmail } );
+    res.render( 'user/register', { usr: {}, userLogged: req[ 'userLogged' ] } );
 }
 
 export function postUsrRegister ( req, res, next ) {
@@ -30,11 +26,7 @@ export function postUsrRegister ( req, res, next ) {
 }
 
 export function getUsrLogin ( req, res, next ) {
-    let userEmail;
-    if ( req[ 'userLogged' ] ) {
-        userEmail = req[ 'userLogged' ][ 'email' ];
-    }
-    res.render( 'user/login', { usr: {}, userEmail: userEmail } );
+    res.render( 'user/login', { usr: {}, userLogged: req[ 'userLogged' ] } );
 }
 
 export function postUsrLogin ( req, res, next ) {
