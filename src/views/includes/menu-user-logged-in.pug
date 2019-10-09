@@ -1,5 +1,5 @@
 if userLogged
-    div.user-details=`Hello, ${userLogged.names}`
+    div.user-details=`Hello, ${userLogged.names} ( ${userLogged.role.toUpperCase()} )`
         style.
             .user-details {
                 margin: 0px;
@@ -11,11 +11,11 @@ if userLogged
         a( href="/" )
             li( class="active" ) Home
         a( href="/product/new" )
-            li Add Product
+            li Add a Product
         div
         a( href="/logout" )
             li Logout
             style.
                 .main-layout__menu {
-                    grid-template-columns: 100px 120px 1fr 100px;
+                    grid-template-columns: 100px 125px 1fr 100px;
                 }
