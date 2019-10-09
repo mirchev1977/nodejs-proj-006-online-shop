@@ -1,4 +1,12 @@
 if userLogged
+    div.user-details=`Hello, ${userLogged.names}`
+        style.
+            .user-details {
+                margin: 0px;
+                padding: 0px 20px;
+                text-align: right;
+                font-weight: bold;
+            }
     ul.main-layout__menu
         a( href="/" )
             li( class="active" ) Home
