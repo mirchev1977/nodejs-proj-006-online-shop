@@ -14,7 +14,6 @@ function postUsrRegister(req, res, next) {
     try {
         new models_user_1.default(req.body['names'], req.body['email'], req.body['password'], req.body['password_repeat']).create().then(usr => {
             postUsrLogin(req, res, next);
-            //res.render( 'user/registered', { loginToken: usr.loginToken } );
         }).catch(errMessage => {
             res.render('user/register', { usr: req.body, ERR: errMessage });
         });
