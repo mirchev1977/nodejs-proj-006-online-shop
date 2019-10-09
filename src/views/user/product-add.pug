@@ -1,0 +1,24 @@
+extends ../main-layout.pug
+
+block append main-layout__head__stylesheets
+    link( rel="stylesheet" href="/styles/form-reg-log.css" type="text/css" )
+
+block main-layout__header__menu
+    include ../includes/menu-user-logged-out.pug
+    include ../includes/menu-user-logged-in.pug
+block main-layout__header__err
+    div#err=ERR
+
+block main-layout__block
+    h1 New Product
+    form( method="POST" action="/product/new" class="form-reg-log" )
+        input( type="hidden" name="path" id="path" value=`${path}`)
+        div( class="form-reg-log_field" )
+            label( for="email" ) Email*
+            input( type="text" name="email" id="email" value=`${usr['email'] || ''}`)
+        div( class="form-reg-log_field" )
+            label( for="password" ) Password*
+            input( type="password" name="password" id="password" )
+        div( class="form-reg-log_field submit" )
+            label( for="password_repeat" ) 
+            button( type="submit" ) Submit

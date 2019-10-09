@@ -18,5 +18,6 @@ router.post('/register', controllersUser.postUsrRegister);
 router.get('/login', controllersUser.getUsrLogin);
 router.post('/login', controllersUser.postUsrLogin);
 router.get('/logout', controllersUser.getUsrLogout);
+router.get('/product/new', controllersUser.getUsrAddProduct);
 exports.default = router;
 //# sourceMappingURL=routes-user.js.map

@@ -50,3 +50,7 @@ export function getUsrLogout ( req, res, next ) {
         res.redirect( '/' );
     }
 }
+
+export function getUsrAddProduct ( req, res, next ) {
+    res.render( 'user/product-add', { usr: {}, userLogged: req[ 'userLogged' ] } );
+}

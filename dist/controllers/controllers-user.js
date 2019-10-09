@@ -45,4 +45,8 @@ function getUsrLogout(req, res, next) {
     }
 }
 exports.getUsrLogout = getUsrLogout;
+function getUsrAddProduct(req, res, next) {
+    res.render('user/product-add', { usr: {}, userLogged: req['userLogged'] });
+}
+exports.getUsrAddProduct = getUsrAddProduct;
 //# sourceMappingURL=controllers-user.js.map

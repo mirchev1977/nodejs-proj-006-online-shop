@@ -14,4 +14,6 @@ router.post( '/login', controllersUser.postUsrLogin );
 
 router.get(  '/logout', controllersUser.getUsrLogout );
 
+router.get(  '/product/new', controllersUser.getUsrAddProduct );
+
 export default router;
