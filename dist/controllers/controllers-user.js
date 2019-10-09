@@ -39,4 +39,11 @@ function postUsrLogin(req, res, next) {
     });
 }
 exports.postUsrLogin = postUsrLogin;
+function getUsrLogout(req, res, next) {
+    if (req.userLogged) {
+        req.session.destroy();
+        res.redirect('/');
+    }
+}
+exports.getUsrLogout = getUsrLogout;
 //# sourceMappingURL=controllers-user.js.map

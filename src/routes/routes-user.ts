@@ -12,4 +12,6 @@ router.post( '/register', controllersUser.postUsrRegister );
 router.get(  '/login', controllersUser.getUsrLogin );
 router.post( '/login', controllersUser.postUsrLogin );
 
+router.get(  '/logout', controllersUser.getUsrLogout );
+
 export default router;

@@ -42,3 +42,11 @@ export function postUsrLogin ( req, res, next ) {
         res.render( 'user/login', { usr: req.body, ERR: errMessage } );
     } );
 }
+
+export function getUsrLogout ( req, res, next ) {
+    if ( req.userLogged ) {
+        req.session.destroy();
+
+        res.redirect( '/' );
+    }
+}
