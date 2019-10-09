@@ -2,11 +2,8 @@ extends ./main-layout.pug
 
 
 block main-layout__header__menu
-    ul.main-layout__menu
-        a( href="/" )
-            li( class="active" ) Home
-        include ./includes/menu-user-logged-out.pug
-        include ./includes/menu-user-logged-in.pug
+    include ./includes/menu-user-logged-out.pug
+    include ./includes/menu-user-logged-in.pug
 
 block main-layout__block
     h1 Home
