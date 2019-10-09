@@ -7,21 +7,8 @@ block main-layout__header__menu
     ul.main-layout__menu
         a( href="/" )
             li Home
-        if userEmail
-            a( href="/product/new" )
-                li Add Product
-                style.
-                    .main-layout__menu {
-                        grid-template-columns: 100px 120px 1fr 100px 100px 100px;
-                    }
-        div
-        a( href="/register" )
-            li Register
-        a( href="/login" )
-            li( class="active" ) Login
-        a( href="/logout" )
-            li Logout
-
+        include ../includes/menu-user-logged-out.pug
+        include ../includes/menu-user-logged-in.pug
 block main-layout__header__err
     div#err=ERR
 

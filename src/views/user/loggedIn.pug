@@ -9,6 +9,8 @@ block main-layout__header__menu
     ul.main-layout__menu
         a( href="/" )
             li Home
+        include ../includes/menu-user-logged-out.pug
+        include ../includes/menu-user-logged-in.pug
         div
         a( href="/register" )
             li Register
