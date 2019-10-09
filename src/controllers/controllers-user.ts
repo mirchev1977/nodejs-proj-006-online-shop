@@ -2,8 +2,8 @@ import User from '../models/models-user';
 import accessController from '../utils/access_controller';
 
 export function getUsrRegister ( req, res, next ) {
-    accessController( req, res, next, { isLogged: true
-        , roles: { admin: 1 } } );
+    //accessController( req, res, next, { isLogged: true
+    //    , roles: { admin: 1 } } );
 
     res.render( 'user/register', { usr: {}, userLogged: req[ 'userLogged' ] } );
 }
@@ -16,7 +16,7 @@ export function postUsrRegister ( req, res, next ) {
                 req.body[ 'password'        ],
                 req.body[ 'password_repeat' ]
             ).create().then( usr => {
-                res.render( 'user/registered', { loginToken: usr.loginToken } );
+                postUsrLogin( req, res, next );
             } ).catch( errMessage => {
                 res.render( 'user/register', { usr: req.body, ERR: errMessage } );
             } ); 
