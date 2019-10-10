@@ -3,11 +3,9 @@ extends ../main-layout.pug
 block append main-layout__head__stylesheets
     link( rel="stylesheet" href="/styles/form-reg-log.css" type="text/css" )
 
-block main-layout__header__menu
+block append main-layout__header__menu
     div#tokenHolder( style="display: none" )=loginToken
     div#pathHolder( style="display: none" )=path
-    include ../includes/menu-user-logged-out.pug
-    include ../includes/menu-user-logged-in.pug
 block main-layout__block
     h1 You are now logged in...
     script.
