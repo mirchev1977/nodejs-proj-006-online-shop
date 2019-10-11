@@ -5,3 +5,9 @@ export function getAdminAddProduct ( req, res, next ) {
         , roles: { admin: 1 } } );
     res.render( 'admin/product-add', { usr: {}, userLogged: req[ 'userLogged' ] } );
 }
+
+export function postAdminAddProduct ( req, res, next ) {
+    accessController( req, res, next, { isLogged: true
+        , roles: { admin: 1 } } );
+    res.render( 'admin/product-add', { usr: {}, userLogged: req[ 'userLogged' ] } );
+}

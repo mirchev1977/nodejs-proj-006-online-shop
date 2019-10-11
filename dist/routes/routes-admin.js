@@ -14,5 +14,6 @@ const express_1 = __importDefault(require("express"));
 const controllersUser = __importStar(require("../controllers/controllers-admin"));
 const router = express_1.default.Router();
 router.get('/product/new', controllersUser.getAdminAddProduct);
+router.post('/product/new', controllersUser.postAdminAddProduct);
 exports.default = router;
 //# sourceMappingURL=routes-admin.js.map
