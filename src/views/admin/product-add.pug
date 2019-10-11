@@ -1,7 +1,7 @@
 extends ../main-layout.pug
 
 block append main-layout__head__stylesheets
-    link( rel="stylesheet" href="/styles/form-reg-log.css" type="text/css" )
+    link( rel="stylesheet" href="/styles/forms.css" type="text/css" )
 
 block main-layout__header__err
     div#err=ERR
@@ -19,6 +19,23 @@ block main-layout__block
         div( class="form-reg-log_field" )
             label( for="title" ) Title*
             input( type="text" name="title" id="title" value=`${usr['title'] || ''}`)
+        div( class="form-reg-log_field" )
+            label( for="price" ) Price*
+            input( type="text" name="price" id="price" value=`${usr['price'] || ''}`)
+        div( class="form-reg-log_field" )
+            label( for="prodDate" ) Production Date*
+            input( type="text" name="prodDate" id="prodDate" value=`${usr['prodDate'] || ''}`)
+        div( class="form-reg-log_field" )
+            label( for="description" ) Description*
+            textarea( 
+                rows=8
+                type="text" 
+                name="description" 
+                id="description" 
+                value=`${usr['description'] || ''}`)
+        div( class="form-reg-log_field" )
+            label( for="image" ) Image*
+            input( type="text" name="image" id="image" value=`${usr['image'] || ''}`)
         div( class="form-reg-log_field submit" )
             label( for="password_repeat" ) 
             button( type="submit" ) Submit
