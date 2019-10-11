@@ -9,12 +9,12 @@ block main-layout__header__err
 block main-layout__header__menu__current
     a( href="/" )
         li Home
-    a( href="/product/new" )
+    a( href="/admin/product/new" )
         li( class="active" ) Add a Product
 
 block main-layout__block
     h1 Add New Product
-    form( method="POST" action="/product/new" class="form-reg-log" )
+    form( method="POST" action="/admin/product/new" class="form-reg-log" )
         input( type="hidden" name="path" id="path" value=`${path}`)
         div( class="form-reg-log_field" )
             label( for="title" ) Title*

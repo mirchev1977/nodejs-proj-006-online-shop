@@ -12,12 +12,19 @@ if userLogged
         block main-layout__header__menu__current
             a( href="/" )
                 li( class="active" ) Home
-            a( href="/product/new" )
-                li Add a Product
+            if userLogged.role === 'admin'
+                a( href="/admin/product/new" )
+                    li Add a Product
         div
         a( href="/logout" )
             li Logout
-            style.
-                .main-layout__menu {
-                    grid-template-columns: 100px 125px 1fr 100px;
-                }
+            if userLogged.role === 'admin'
+                style.
+                    .main-layout__menu {
+                        grid-template-columns: 100px 125px 1fr 100px;
+                    }
+            else
+                style.
+                    .main-layout__menu {
+                        grid-template-columns: 100px 1fr 100px;
+                    }

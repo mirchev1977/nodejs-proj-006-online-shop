@@ -54,12 +54,13 @@ export default class User {
                     email: email,
                     password: password
                 }
-            } ).then( user => {
+            } ).then( users => {
                 userCreated = new User( 
-                        user[0].names,    user[0].email, 
-                        user[0].password, user[0].password
+                        users[0].names,    users[0].email, 
+                        users[0].password, users[0].password
                     );
-                const login: Login = new Login( user[0] );
+                userCreated.role = users[0].role;
+                const login: Login = new Login( users[0] );
                 return login.createLogin();
             } ).then( loginToken => {
                 userCreated.loginToken = loginToken;
@@ -85,6 +86,7 @@ export default class User {
                     , usr.email
                     , usr.password
                     , usr.password );
+                user.role = usr.role;
                 resolve( user );
             } ).catch( err => {
                 reject( 'There is no such user...' );

@@ -11,12 +11,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const controllersUser = __importStar(require("../controllers/controllers-user"));
+const controllersUser = __importStar(require("../controllers/controllers-admin"));
 const router = express_1.default.Router();
-router.get('/register', controllersUser.getUsrRegister);
-router.post('/register', controllersUser.postUsrRegister);
-router.get('/login', controllersUser.getUsrLogin);
-router.post('/login', controllersUser.postUsrLogin);
-router.get('/logout', controllersUser.getUsrLogout);
+router.get('/product/new', controllersUser.getAdminAddProduct);
 exports.default = router;
-//# sourceMappingURL=routes-user.js.map
+//# sourceMappingURL=routes-admin.js.map

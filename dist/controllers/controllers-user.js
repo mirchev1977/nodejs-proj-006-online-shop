@@ -4,9 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const models_user_1 = __importDefault(require("../models/models-user"));
+const access_controller_1 = __importDefault(require("../utils/access_controller"));
 function getUsrRegister(req, res, next) {
-    //accessController( req, res, next, { isLogged: true
-    //    , roles: { admin: 1 } } );
     res.render('user/register', { usr: {}, userLogged: req['userLogged'] });
 }
 exports.getUsrRegister = getUsrRegister;
@@ -46,7 +45,9 @@ function getUsrLogout(req, res, next) {
 }
 exports.getUsrLogout = getUsrLogout;
 function getUsrAddProduct(req, res, next) {
-    res.render('user/product-add', { usr: {}, userLogged: req['userLogged'] });
+    access_controller_1.default(req, res, next, { isLogged: true,
+        roles: { admin: 1 } });
+    res.render('admin/product-add', { usr: {}, userLogged: req['userLogged'] });
 }
 exports.getUsrAddProduct = getUsrAddProduct;
 //# sourceMappingURL=controllers-user.js.map

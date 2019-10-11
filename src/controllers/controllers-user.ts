@@ -2,9 +2,6 @@ import User from '../models/models-user';
 import accessController from '../utils/access_controller';
 
 export function getUsrRegister ( req, res, next ) {
-    //accessController( req, res, next, { isLogged: true
-    //    , roles: { admin: 1 } } );
-
     res.render( 'user/register', { usr: {}, userLogged: req[ 'userLogged' ] } );
 }
 
@@ -52,5 +49,7 @@ export function getUsrLogout ( req, res, next ) {
 }
 
 export function getUsrAddProduct ( req, res, next ) {
-    res.render( 'user/product-add', { usr: {}, userLogged: req[ 'userLogged' ] } );
+    accessController( req, res, next, { isLogged: true
+        , roles: { admin: 1 } } );
+    res.render( 'admin/product-add', { usr: {}, userLogged: req[ 'userLogged' ] } );
 }

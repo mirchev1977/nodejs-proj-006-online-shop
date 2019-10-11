@@ -9,6 +9,7 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const express_session_1 = __importDefault(require("express-session"));
 const root_dir_1 = __importDefault(require("./utils/root-dir"));
 const routes_user_1 = __importDefault(require("./routes/routes-user"));
+const routes_admin_1 = __importDefault(require("./routes/routes-admin"));
 const sequelize = require('./utils/database');
 const repositories_1 = __importDefault(require("./repositories/repositories"));
 const settings_1 = __importDefault(require("./utils/settings"));
@@ -22,6 +23,7 @@ app.use(express_session_1.default({ secret: 'one' }));
 // make user authentication
 app.use(settings_1.default.userLogin);
 app.use('/', routes_user_1.default);
+app.use('/admin', routes_admin_1.default);
 app.get('/', (req, res, next) => {
     res.render('home', { userLogged: req['userLogged'] });
 });

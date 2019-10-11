@@ -7,6 +7,7 @@ import session     from 'express-session';
 
 import rootDir      from './utils/root-dir';
 import routesUser   from './routes/routes-user';
+import routesAdmin  from './routes/routes-admin';
 const sequelize     = require( './utils/database' );
 import repositories from './repositories/repositories';
 import settings from './utils/settings';
@@ -17,7 +18,7 @@ app.use( express.static(  path.join( rootDir, 'public' ) ) );
 app.use( bodyParser.urlencoded( { extended: false }      ) );
 
 app.set( 'view engine', 'pug'       );
-app.set( 'views',       'src/views' );
+app.set( 'views',       'src/views' ); 
 
 repositories();
 
@@ -27,6 +28,7 @@ app.use( session( { secret: 'one' } ) );
 app.use( settings.userLogin );
 
 app.use( '/', routesUser );
+app.use( '/admin', routesAdmin );
 
 app.get( '/', ( req, res, next ) => {
     res.render( 'home', { userLogged: req[ 'userLogged' ] } );

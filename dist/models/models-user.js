@@ -45,9 +45,10 @@ class User {
                     email: email,
                     password: password
                 }
-            }).then(user => {
-                userCreated = new User(user[0].names, user[0].email, user[0].password, user[0].password);
-                const login = new models_login_1.default(user[0]);
+            }).then(users => {
+                userCreated = new User(users[0].names, users[0].email, users[0].password, users[0].password);
+                userCreated.role = users[0].role;
+                const login = new models_login_1.default(users[0]);
                 return login.createLogin();
             }).then(loginToken => {
                 userCreated.loginToken = loginToken;
@@ -68,6 +69,7 @@ class User {
             }).then(usrsArr => {
                 const usr = usrsArr[0];
                 const user = new User(usr.names, usr.email, usr.password, usr.password);
+                user.role = usr.role;
                 resolve(user);
             }).catch(err => {
                 reject('There is no such user...');
