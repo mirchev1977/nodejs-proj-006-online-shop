@@ -32,9 +32,7 @@ export default class Product {
                 userId:      userRepo.id
             } )
             .then( product => {
-                debugger;
                 userRepo.createProduct( product );
-                debugger;
                 resolve( this );
             } ).catch( err => {
                 console.log( 'Product cannot be created...', err );

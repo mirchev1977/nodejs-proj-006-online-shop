@@ -20,10 +20,8 @@ export function postAdminAddProduct ( req, res, next ) {
     );
 
     product.create( req.userLogged.repo ).then( product => {
-        debugger;
         res.render( 'admin/product-add', { usr: {}, userLogged: req[ 'userLogged' ] } );
     } ).catch( err => {
-        debugger;
         res.render( 'admin/product-add', { usr: {}, userLogged: req[ 'userLogged' ] } );
     } );
 
