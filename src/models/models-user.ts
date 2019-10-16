@@ -1,7 +1,6 @@
 import UserRepo  from "../repositories/repositories-user";
 import LoginRepo  from "../repositories/repositories-login";
 import Login     from "./models-login";
-import { promises } from "dns";
 
 export default class User {
     private _names:     string;
@@ -87,6 +86,7 @@ export default class User {
                     , usr.password
                     , usr.password );
                 user.role = usr.role;
+                user[ 'repo' ] = usr;
                 resolve( user );
             } ).catch( err => {
                 reject( 'There is no such user...' );

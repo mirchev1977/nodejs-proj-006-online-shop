@@ -70,6 +70,7 @@ class User {
                 const usr = usrsArr[0];
                 const user = new User(usr.names, usr.email, usr.password, usr.password);
                 user.role = usr.role;
+                user['repo'] = usr;
                 resolve(user);
             }).catch(err => {
                 reject('There is no such user...');
