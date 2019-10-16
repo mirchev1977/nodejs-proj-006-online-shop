@@ -1,4 +1,5 @@
 import User         from '../models/models-user';
+import UserRepo  from "../repositories/repositories-user";
 
  const userLogin = ( req, res, next ) => {
     if ( 

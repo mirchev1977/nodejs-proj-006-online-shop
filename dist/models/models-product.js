@@ -19,7 +19,8 @@ class Product {
                 price: this.price,
                 prodDate: this.prodDate,
                 description: this.description,
-                image: this.image
+                image: this.image,
+                userId: userRepo.id
             })
                 .then(product => {
                 debugger;
