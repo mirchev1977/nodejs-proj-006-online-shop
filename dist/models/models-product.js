@@ -5,12 +5,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const repositories_product_1 = __importDefault(require("../repositories/repositories-product"));
 class Product {
-    constructor(title, price, prodDate, description, image) {
-        this._title = title;
-        this._price = price;
-        this._prodDate = prodDate;
-        this._description = description;
-        this._image = image;
+    constructor(title, price, prodDate, description, image, id = 0) {
+        this.id = id;
+        this.title = title;
+        this.price = price;
+        this.prodDate = prodDate;
+        this.description = description;
+        this.image = image;
     }
     create(userRepo) {
         const promise = new Promise((resolve, reject) => {
@@ -23,9 +24,7 @@ class Product {
                 userId: userRepo.id
             })
                 .then(product => {
-                debugger;
                 userRepo.createProduct(product);
-                debugger;
                 resolve(this);
             }).catch(err => {
                 console.log('Product cannot be created...', err);
@@ -33,6 +32,12 @@ class Product {
             });
         });
         return promise;
+    }
+    set id(id) {
+        this._id = id;
+    }
+    get id() {
+        return this._id;
     }
     set title(title) {
         this._title = title;

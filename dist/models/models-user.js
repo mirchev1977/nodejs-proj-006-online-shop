@@ -7,10 +7,11 @@ const repositories_user_1 = __importDefault(require("../repositories/repositorie
 const repositories_login_1 = __importDefault(require("../repositories/repositories-login"));
 const models_login_1 = __importDefault(require("./models-login"));
 class User {
-    constructor(names, email, password, passwordRepeat) {
+    constructor(names, email, password, passwordRepeat, id = 0) {
         if (password !== passwordRepeat) {
             throw new Error("Password and Password Repeat do not match.");
         }
+        this.id = id;
         this.names = names;
         this.email = email;
         this.password = password;
@@ -46,7 +47,7 @@ class User {
                     password: password
                 }
             }).then(users => {
-                userCreated = new User(users[0].names, users[0].email, users[0].password, users[0].password);
+                userCreated = new User(users[0].names, users[0].email, users[0].password, users[0].password, users[0].id);
                 userCreated.role = users[0].role;
                 const login = new models_login_1.default(users[0]);
                 return login.createLogin();
@@ -68,7 +69,7 @@ class User {
                     }]
             }).then(usrsArr => {
                 const usr = usrsArr[0];
-                const user = new User(usr.names, usr.email, usr.password, usr.password);
+                const user = new User(usr.names, usr.email, usr.password, usr.password, usr.id);
                 user.role = usr.role;
                 user['repo'] = usr;
                 resolve(user);
@@ -77,6 +78,12 @@ class User {
             });
         });
         return promise;
+    }
+    set id(id) {
+        this._id = id;
+    }
+    get id() {
+        return this._id;
     }
     set names(names) {
         if (names.length < 2) {
