@@ -3,18 +3,20 @@ import LoginRepo  from "../repositories/repositories-login";
 import Login     from "./models-login";
 
 export default class User {
+    private _id:        number;
     private _names:     string;
     private _email:     string;
     private _password:  string;
     public  loginToken: string;
     private _role:      string;
 
-    constructor ( names, email, password, passwordRepeat ) {
+    constructor ( names, email, password, passwordRepeat, id = 0 ) {
 
         if ( password !== passwordRepeat ) {
             throw new Error( "Password and Password Repeat do not match." );
         }
 
+        this.id       = id;
         this.names    = names;
         this.email    = email;
         this.password = password; 
@@ -56,7 +58,8 @@ export default class User {
             } ).then( users => {
                 userCreated = new User( 
                         users[0].names,    users[0].email, 
-                        users[0].password, users[0].password
+                        users[0].password, users[0].password,
+                        users[0].id
                     );
                 userCreated.role = users[0].role;
                 const login: Login = new Login( users[0] );
@@ -84,7 +87,8 @@ export default class User {
                 const user = new User( usr.names
                     , usr.email
                     , usr.password
-                    , usr.password );
+                    , usr.password
+                    , usr.id );
                 user.role = usr.role;
                 user[ 'repo' ] = usr;
                 resolve( user );
@@ -94,6 +98,14 @@ export default class User {
         } );
 
         return promise;
+    }
+
+    set id ( id: number ) {
+        this._id = id;
+    }
+
+    get id (): number {
+        return this._id;
     }
 
     set names ( names: string ) {
