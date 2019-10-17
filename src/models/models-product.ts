@@ -46,6 +46,26 @@ export default class Product {
         return promise;
     }
 
+    static getAll (): Promise<Product[]> {
+        const promise = new Promise<Product[]>( ( resolve, reject ) => {
+            ProductRepo.findAll().then( arrProducts => {
+                const _arrProducts = [];
+                arrProducts.forEach( _prod => {
+                    _arrProducts.push( new Product(
+                        _prod.title, _prod.price, _prod.prodDate, _prod.description,
+                        _prod.image, _prod.image
+                    ) );
+                });
+
+                resolve( _arrProducts );
+            } ).catch( errMess => {
+                reject( errMess );
+            } );
+        } );
+
+        return promise;
+    }
+
     set id ( id: number ) {
         this._id = id;
     }
