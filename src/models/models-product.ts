@@ -1,6 +1,7 @@
 import ProductRepo  from "../repositories/repositories-product";
 
 export default class Product {
+    private _id:          number;
     private _title:       string;
     private _price:       number;
     private _prodDate:    number;
@@ -13,12 +14,14 @@ export default class Product {
         , prodDate:    number
         , description: string
         , image:       string 
+        , id:          number = 0 
     ) {
-        this._title       = title;
-        this._price       = price;
-        this._prodDate    = prodDate;
-        this._description = description;
-        this._image       = image;
+        this.id          = id;
+        this.title       = title;
+        this.price       = price;
+        this.prodDate    = prodDate;
+        this.description = description;
+        this.image       = image;
     }
 
     create( userRepo ): Promise<Product> {
@@ -42,6 +45,14 @@ export default class Product {
 
         return promise;
     }
+
+    set id ( id: number ) {
+        this._id = id;
+    }
+
+    get id (): number{
+        return this._id;
+    } 
 
     set title ( title: string ) {
         this._title = title;
