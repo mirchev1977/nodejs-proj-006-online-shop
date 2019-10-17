@@ -1,9 +1,10 @@
 if !userLogged
     ul.main-layout__menu
-        a( href="/" )
-            li( class="active" ) Home
-        a( href="/products/all" )
-            li Products
+        block main-layout__header__menu__current
+            a( href="/" )
+                li( class="active" ) Home
+            a( href="/products/all" )
+                li Products
         div
         a( href="/register" )
             li Register

@@ -1,0 +1,13 @@
+extends ../main-layout.pug
+
+block main-layout__header__menu__current
+    a( href="/" )
+        li Home
+    a( href="/products/all" )
+        li( class="active" ) Products
+    if userLogged && userLogged.role === 'admin'
+        a( href="/admin/product/new" )
+            li Add a Product
+
+block main-layout__block
+    h1 All Products

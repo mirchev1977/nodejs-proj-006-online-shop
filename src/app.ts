@@ -3,14 +3,17 @@
 import express    from 'express';
 import path       from 'path';
 import bodyParser from 'body-parser';
-import session     from 'express-session';
+import session    from 'express-session';
 
-import rootDir      from './utils/root-dir';
-import routesUser   from './routes/routes-user';
-import routesAdmin  from './routes/routes-admin';
+import rootDir         from './utils/root-dir';
+import routesUser      from './routes/routes-user';
+import routesAdmin     from './routes/routes-admin';
+import routesProducts  from './routes/routes-products';
+
 const sequelize     = require( './utils/database' );
+
 import repositories from './repositories/repositories';
-import settings from './utils/settings';
+import settings     from './utils/settings';
 
 const app = express();
 
@@ -27,8 +30,9 @@ app.use( session( { secret: 'one' } ) );
 // make user authentication
 app.use( settings.userLogin );
 
-app.use( '/', routesUser );
-app.use( '/admin', routesAdmin );
+app.use( '/',         routesUser     );
+app.use( '/admin',    routesAdmin    );
+app.use( '/products', routesProducts );
 
 app.get( '/', ( req, res, next ) => {
     res.render( 'home', { userLogged: req[ 'userLogged' ] } );
