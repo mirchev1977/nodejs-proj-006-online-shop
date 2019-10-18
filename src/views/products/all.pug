@@ -9,5 +9,21 @@ block main-layout__header__menu__current
         a( href="/admin/product/new" )
             li Add a Product
 
+block append main-layout__head__stylesheets
+    link( rel="stylesheet" href="/styles/products.css" type="text/css" )
+
 block main-layout__block
-    h1 All Products
+    div.container-products
+        each prod in arrProducts
+            div.container-product
+                div.container-product__details
+                    h3="Title: " + prod.title
+                    hr
+                    p='Price: ' + prod.price
+                    hr
+                    p='Issued on: ' + prod.prodDate
+                    hr
+                    p='Description: ' + prod.description
+                div.container-product__image-cont
+                    img.container-product__image-cont__img( src=prod.image )
+                div.container-product__buttons

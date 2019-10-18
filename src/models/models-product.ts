@@ -53,7 +53,7 @@ export default class Product {
                 arrProducts.forEach( _prod => {
                     _arrProducts.push( new Product(
                         _prod.title, _prod.price, _prod.prodDate, _prod.description,
-                        _prod.image, _prod.image
+                        _prod.image, _prod.id
                     ) );
                 });
 
