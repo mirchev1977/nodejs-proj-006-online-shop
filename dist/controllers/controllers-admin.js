@@ -16,9 +16,9 @@ function postAdminAddProduct(req, res, next) {
         roles: { admin: 1 } });
     const product = new models_product_1.default(req.body.title, req.body.price, req.body.prodDate, req.body.description, req.body.image);
     product.create(req.userLogged.repo).then(product => {
-        res.render('admin/product-add', { usr: {}, userLogged: req['userLogged'] });
+        res.redirect('/products/all');
     }).catch(err => {
-        res.render('admin/product-add', { usr: {}, userLogged: req['userLogged'] });
+        res.redirect('/products/all');
     });
 }
 exports.postAdminAddProduct = postAdminAddProduct;

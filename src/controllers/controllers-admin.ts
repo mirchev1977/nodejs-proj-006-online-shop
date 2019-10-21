@@ -20,9 +20,9 @@ export function postAdminAddProduct ( req, res, next ) {
     );
 
     product.create( req.userLogged.repo ).then( product => {
-        res.render( 'admin/product-add', { usr: {}, userLogged: req[ 'userLogged' ] } );
+        res.redirect( '/products/all' ); 
     } ).catch( err => {
-        res.render( 'admin/product-add', { usr: {}, userLogged: req[ 'userLogged' ] } );
+        res.redirect( '/products/all' );
     } );
 
 }
