@@ -1,17 +1,19 @@
 import ProductRepo  from "../repositories/repositories-product";
+import { unixToDateHR, dateHRtoUnix } from '../utils/date';
+import { resolve } from "bluebird";
 
 export default class Product {
     private _id:          number;
     private _title:       string;
     private _price:       number;
-    private _prodDate:    number;
+    private _prodDate:    string;
     private _description: string;
     private _image:       string;
 
     constructor ( 
         title:         string
         , price:       number
-        , prodDate:    number
+        , prodDate:    string
         , description: string
         , image:       string 
         , id:          number = 0 
@@ -29,17 +31,14 @@ export default class Product {
             ProductRepo.create( {
                 title:       this.title,
                 price:       this.price,
-                prodDate:    this.prodDate,
+                prodDate:    this.prodUnixDate,
                 description: this.description,
                 image:       this.image,
                 userId:      userRepo.id
-            } )
-            .then( product => {
-                userRepo.createProduct( product );
+            } ).then( product => {
                 resolve( this );
             } ).catch( err => {
-                console.log( 'Product cannot be created...', err );
-                reject( 'Product cannot be created...' );
+                reject( err );
             } );
         } );
 
@@ -51,10 +50,19 @@ export default class Product {
             ProductRepo.findAll().then( arrProducts => {
                 const _arrProducts = [];
                 arrProducts.forEach( _prod => {
-                    _arrProducts.push( new Product(
-                        _prod.title, _prod.price, _prod.prodDate, _prod.description,
-                        _prod.image, _prod.id
-                    ) );
+                    let _prodct;
+                    let _prodDate = unixToDateHR(  _prod.prodDate );
+                    try {
+                            _prodct = new Product(
+                            _prod.title, _prod.price, 
+                            _prodDate,
+                            _prod.description,
+                            _prod.image, _prod.id
+                        ); 
+                    } catch ( err ) {
+                        reject( err );
+                    }
+                    _arrProducts.push( _prodct );
                 });
 
                 resolve( _arrProducts );
@@ -67,6 +75,7 @@ export default class Product {
     }
 
     set id ( id: number ) {
+        if ( typeof id !== 'number' ) throw new Error( 'id should be number' );
         this._id = id;
     }
 
@@ -75,6 +84,7 @@ export default class Product {
     } 
 
     set title ( title: string ) {
+        if ( typeof title !== 'string' ) throw new Error( 'title should be string' );
         this._title = title;
     }
 
@@ -83,6 +93,10 @@ export default class Product {
     } 
 
     set price ( price: number ) {
+        price = price * 1;
+        if ( Number.isNaN( price )     ) throw new Error( 'Price should be number' );
+        if ( typeof price !== 'number' ) throw new Error( 'Price should be number' );
+
         this._price = price;
     }
 
@@ -90,15 +104,20 @@ export default class Product {
         return this._price;
     } 
 
-    set prodDate ( prodDate: number ) {
-        this._prodDate = prodDate;
+    set prodDate ( prodDate: string ) {
+        this._prodDate = dateHRtoUnix( prodDate );
     }
 
-    get prodDate (): number {
-        return this._prodDate;
+    get prodDate (): string {
+        return unixToDateHR( Number( this._prodDate ) );
     } 
 
+    get prodUnixDate (): number {
+        return Number( this._prodDate );
+    }
+
     set description ( description: string ) {
+        if ( typeof description !== 'string' ) throw new Error( 'Description should be string' );
         this._description = description;
     }
 
@@ -107,6 +126,7 @@ export default class Product {
     } 
 
     set image ( image: string ) {
+        if ( typeof image !== 'string' ) throw new Error( 'Image should be string' );
         this._image = image;
     }
 

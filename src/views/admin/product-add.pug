@@ -20,24 +20,29 @@ block main-layout__block
         input( type="hidden" name="path" id="path" value=`${path}`)
         div( class="form-reg-log_field" )
             label( for="title" ) Title*
-            input( type="text" name="title" id="title" value=`${usr['title'] || ''}`)
+            input( type="text" name="title" id="title" value=`${prod['title'] || ''}`)
         div( class="form-reg-log_field" )
             label( for="price" ) Price*
-            input( type="text" name="price" id="price" value=`${usr['price'] || ''}`)
+            input( type="text" name="price" id="price" value=`${prod['price'] || ''}`)
         div( class="form-reg-log_field" )
             label( for="prodDate" ) Production Date*
-            input( type="text" name="prodDate" id="prodDate" value=`${usr['prodDate'] || ''}`)
+            input( 
+                type="text" 
+                name="prodDate" 
+                id="prodDate" 
+                placeholder="dd.mm.yyyy"
+                value=`${prod['prodDate'] || ''}`
+            )
         div( class="form-reg-log_field" )
             label( for="description" ) Description*
             textarea( 
                 rows=8
                 type="text" 
                 name="description" 
-                id="description" 
-                value=`${usr['description'] || ''}`)
+                id="description")=`${prod['description'] || ''}`
         div( class="form-reg-log_field" )
             label( for="image" ) Image*
-            input( type="text" name="image" id="image" value=`${usr['image'] || ''}`)
+            input( type="text" name="image" id="image" value=`${prod['image'] || ''}`)
         div( class="form-reg-log_field submit" )
             label( for="password_repeat" ) 
             button( type="submit" ) Submit

@@ -11,7 +11,10 @@ function getAllProducts(req, res, next) {
             arrProducts: arrProducts
         });
     }).catch(errMess => {
-        res.render('products/all', { userLogged: req['userLogged'] });
+        res.render('products/all', {
+            userLogged: req['userLogged'],
+            ERR: errMess.message
+        });
     });
 }
 exports.getAllProducts = getAllProducts;

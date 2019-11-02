@@ -12,18 +12,22 @@ block main-layout__header__menu__current
 block append main-layout__head__stylesheets
     link( rel="stylesheet" href="/styles/products.css" type="text/css" )
 
+block main-layout__header__err
+    div#err=ERR
+
 block main-layout__block
-    div.container-products
-        each prod in arrProducts
-            div.container-product
-                div.container-product__details
-                    h3="Title: " + prod.title
-                    hr
-                    p='Price: ' + prod.price
-                    hr
-                    p='Issued on: ' + prod.prodDate
-                    hr
-                    p='Description: ' + prod.description
-                div.container-product__image-cont
-                    img.container-product__image-cont__img( src=prod.image )
-                div.container-product__buttons
+    if !ERR
+        div.container-products
+            each prod in arrProducts
+                div.container-product
+                    div.container-product__details
+                        h3="Title: " + prod.title
+                        hr
+                        p='Price: ' + prod.price
+                        hr
+                        p='Issued on: ' + prod.prodDate
+                        hr
+                        p='Description: ' + prod.description
+                    div.container-product__image-cont
+                        img.container-product__image-cont__img( src=prod.image )
+                    div.container-product__buttons

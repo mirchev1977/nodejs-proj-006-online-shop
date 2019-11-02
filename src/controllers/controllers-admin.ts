@@ -4,25 +4,40 @@ import accessController from '../utils/access_controller';
 export function getAdminAddProduct ( req, res, next ) {
     accessController( req, res, next, { isLogged: true
         , roles: { admin: 1 } } );
-    res.render( 'admin/product-add', { usr: {}, userLogged: req[ 'userLogged' ] } );
+    res.render( 'admin/product-add', {
+        usr: {}, 
+        userLogged: req[ 'userLogged' ],
+        prod: req.product || {},
+        ERR:  req.err || ""
+    });
 }
 
 export function postAdminAddProduct ( req, res, next ) {
     accessController( req, res, next, { isLogged: true
         , roles: { admin: 1 } } );
 
-    const product = new Product(
-        req.body.title,
-        req.body.price,
-        req.body.prodDate,
-        req.body.description,
-        req.body.image
-    );
+    let product: Product;
+    try {
+        product = new Product(
+            req.body.title,
+            req.body.price,
+            req.body.prodDate,
+            req.body.description,
+            req.body.image
+        );
+    } catch ( err ) {
+        req.product = req.body;
+        req.err     = err;
+        getAdminAddProduct( req, res, next );
+    }
 
     product.create( req.userLogged.repo ).then( product => {
         res.redirect( '/products/all' ); 
     } ).catch( err => {
-        res.redirect( '/products/all' );
+        console.log( 'Error: ', err );
+        req.product = product;
+        req.err     = 'There are some problems. Product cannot be created...';
+        getAdminAddProduct( req, res, next );
     } );
 
 }

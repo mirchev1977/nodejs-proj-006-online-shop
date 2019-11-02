@@ -10,7 +10,7 @@ const Product = sequelize.define('product', {
         primaryKey: true, allowNull: false },
     title: { type: sequelize_1.default.STRING, allowNull: false },
     price: { type: sequelize_1.default.DECIMAL, allowNull: false },
-    prodDate: { type: sequelize_1.default.INTEGER, allowNull: false },
+    prodDate: { type: sequelize_1.default.BIGINT, allowNull: false },
     description: { type: sequelize_1.default.STRING, allowNull: false },
     image: { type: sequelize_1.default.STRING, allowNull: false }
 });

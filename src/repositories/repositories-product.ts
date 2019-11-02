@@ -1,4 +1,4 @@
-import Sequelize from 'sequelize';
+import Sequelize, { INTEGER, DataTypes } from 'sequelize';
 const  sequelize = require( '../utils/database' );
 
 const Product = sequelize.define( 'product', {
@@ -6,7 +6,7 @@ const Product = sequelize.define( 'product', {
                     primaryKey: true, allowNull: false        },
     title:       { type: Sequelize.STRING,  allowNull: false  },
     price:       { type: Sequelize.DECIMAL, allowNull: false  },
-    prodDate:    { type: Sequelize.INTEGER, allowNull: false  },
+    prodDate:    { type: Sequelize.BIGINT,  allowNull: false  },
     description: { type: Sequelize.STRING,  allowNull: false  },
     image:       { type: Sequelize.STRING,  allowNull: false  }
 } );
