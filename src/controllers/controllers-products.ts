@@ -13,3 +13,17 @@ export function getAllProducts ( req, res, next ) {
         } ); 
     } );
 }
+
+export function getMyProducts ( req, res, next ) {
+    Product.getMine( req.userLogged.id ).then( arrProducts => {
+        res.render( 'products/mine', { 
+            userLogged: req[ 'userLogged' ]
+            , arrProducts: arrProducts 
+        } );
+    }).catch( errMess => {
+        res.render( 'products/mine', { 
+            userLogged: req[ 'userLogged' ],
+            ERR: errMess.message
+        } ); 
+    } );
+}

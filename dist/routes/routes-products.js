@@ -14,5 +14,6 @@ const express_1 = __importDefault(require("express"));
 const controllersProducts = __importStar(require("../controllers/controllers-products"));
 const router = express_1.default.Router();
 router.get('/all', controllersProducts.getAllProducts);
+router.get('/mine', controllersProducts.getMyProducts);
 exports.default = router;
 //# sourceMappingURL=routes-products.js.map

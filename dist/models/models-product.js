@@ -32,26 +32,10 @@ class Product {
         return promise;
     }
     static getAll() {
-        const promise = new Promise((resolve, reject) => {
-            repositories_product_1.default.findAll().then(arrProducts => {
-                const _arrProducts = [];
-                arrProducts.forEach(_prod => {
-                    let _prodct;
-                    let _prodDate = date_1.unixToDateHR(_prod.prodDate);
-                    try {
-                        _prodct = new Product(_prod.title, _prod.price, _prodDate, _prod.description, _prod.image, _prod.id);
-                    }
-                    catch (err) {
-                        reject(err);
-                    }
-                    _arrProducts.push(_prodct);
-                });
-                resolve(_arrProducts);
-            }).catch(errMess => {
-                reject(errMess);
-            });
-        });
-        return promise;
+        return Product._getArrProducts(null);
+    }
+    static getMine(usrId = null) {
+        return Product._getArrProducts(usrId);
     }
     set id(id) {
         if (typeof id !== 'number')
@@ -104,6 +88,40 @@ class Product {
     }
     get image() {
         return this._image;
+    }
+    static _productFindAll(usrId = null) {
+        if (!usrId) {
+            return repositories_product_1.default.findAll();
+        }
+        else {
+            return repositories_product_1.default.findAll({
+                where: {
+                    userId: usrId
+                }
+            });
+        }
+    }
+    static _getArrProducts(usrId) {
+        const promise = new Promise((resolve, reject) => {
+            Product._productFindAll(usrId).then(arrProducts => {
+                const _arrProducts = [];
+                arrProducts.forEach(_prod => {
+                    let _prodct;
+                    let _prodDate = date_1.unixToDateHR(_prod.prodDate);
+                    try {
+                        _prodct = new Product(_prod.title, _prod.price, _prodDate, _prod.description, _prod.image, _prod.id);
+                    }
+                    catch (err) {
+                        reject(err);
+                    }
+                    _arrProducts.push(_prodct);
+                });
+                resolve(_arrProducts);
+            }).catch(errMess => {
+                reject(errMess);
+            });
+        });
+        return promise;
     }
 }
 exports.default = Product;

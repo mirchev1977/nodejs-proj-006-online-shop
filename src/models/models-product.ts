@@ -1,6 +1,5 @@
 import ProductRepo  from "../repositories/repositories-product";
 import { unixToDateHR, dateHRtoUnix } from '../utils/date';
-import { resolve } from "bluebird";
 
 export default class Product {
     private _id:          number;
@@ -43,35 +42,14 @@ export default class Product {
         } );
 
         return promise;
+    } 
+
+    static getAll(): Promise<Product[]> {
+        return Product._getArrProducts( null );
     }
 
-    static getAll (): Promise<Product[]> {
-        const promise = new Promise<Product[]>( ( resolve, reject ) => {
-            ProductRepo.findAll().then( arrProducts => {
-                const _arrProducts = [];
-                arrProducts.forEach( _prod => {
-                    let _prodct;
-                    let _prodDate = unixToDateHR(  _prod.prodDate );
-                    try {
-                            _prodct = new Product(
-                            _prod.title, _prod.price, 
-                            _prodDate,
-                            _prod.description,
-                            _prod.image, _prod.id
-                        ); 
-                    } catch ( err ) {
-                        reject( err );
-                    }
-                    _arrProducts.push( _prodct );
-                });
-
-                resolve( _arrProducts );
-            } ).catch( errMess => {
-                reject( errMess );
-            } );
-        } );
-
-        return promise;
+    static getMine( usrId: number = null ): Promise<Product[]> {
+        return Product._getArrProducts( usrId );
     }
 
     set id ( id: number ) {
@@ -133,4 +111,45 @@ export default class Product {
     get image (): string {
         return this._image;
     } 
+
+    private static _productFindAll ( usrId: number = null ): Promise<any> {
+        if ( ! usrId) {
+            return ProductRepo.findAll(); 
+        } else {
+            return ProductRepo.findAll( {
+                where: {
+                    userId: usrId
+                }
+            } ); 
+        }
+    }
+
+    private static _getArrProducts ( usrId: number ): Promise<Product[]> {
+        const promise = new Promise<Product[]>( ( resolve, reject ) => {
+            Product._productFindAll( usrId ).then( arrProducts => {
+                const _arrProducts = [];
+                arrProducts.forEach( _prod => {
+                    let _prodct;
+                    let _prodDate = unixToDateHR(  _prod.prodDate );
+                    try {
+                            _prodct = new Product(
+                            _prod.title, _prod.price, 
+                            _prodDate,
+                            _prod.description,
+                            _prod.image, _prod.id
+                        ); 
+                    } catch ( err ) {
+                        reject( err );
+                    }
+                    _arrProducts.push( _prodct );
+                });
+
+                resolve( _arrProducts );
+            } ).catch( errMess => {
+                reject( errMess );
+            } );
+        } );
+
+        return promise;
+    }
 }

@@ -18,4 +18,18 @@ function getAllProducts(req, res, next) {
     });
 }
 exports.getAllProducts = getAllProducts;
+function getMyProducts(req, res, next) {
+    models_product_1.default.getMine(req.userLogged.id).then(arrProducts => {
+        res.render('products/mine', {
+            userLogged: req['userLogged'],
+            arrProducts: arrProducts
+        });
+    }).catch(errMess => {
+        res.render('products/mine', {
+            userLogged: req['userLogged'],
+            ERR: errMess.message
+        });
+    });
+}
+exports.getMyProducts = getMyProducts;
 //# sourceMappingURL=controllers-products.js.map

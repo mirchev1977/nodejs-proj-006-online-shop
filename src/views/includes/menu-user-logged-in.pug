@@ -14,6 +14,8 @@ if userLogged
                 li( class="active" ) Home
             a( href="/products/all" )
                 li Products
+            a( href="/products/mine" )
+                li My Products
             if userLogged.role === 'admin'
                 a( href="/admin/product/new" )
                     li Add a Product
@@ -23,10 +25,10 @@ if userLogged
             if userLogged.role === 'admin'
                 style.
                     .main-layout__menu {
-                        grid-template-columns: 100px 100px 125px 1fr 100px;
+                        grid-template-columns: 100px 100px 125px 125px 1fr 100px;
                     }
             else
                 style.
                     .main-layout__menu {
-                        grid-template-columns: 100px 100px 1fr 100px;
+                        grid-template-columns: 100px 100px 125px 1fr 100px;
                     }
