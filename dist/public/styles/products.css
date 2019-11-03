@@ -46,4 +46,20 @@
 
 .container-product__buttons {
     width: 10%; 
+    padding-top: 15px;
+}
+.container-product__button {
+    box-sizing: border-box;
+    width: 100%;
+    position: relative;
+    display: block;
+    height: 40px;
+    margin-bottom: 10px;
+}
+.container-product__button img {
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    position: absolute;
+    right: -5px;
 }
