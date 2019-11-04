@@ -52,6 +52,27 @@ export default class Product {
         return Product._getArrProducts( usrId );
     }
 
+    static getOneByPk ( pk: number ): Promise<Product> {
+        const promise: Promise<Product> = new Promise( (  resolve, reject ) => {
+            ProductRepo.findByPk( pk ).then( _prod => {
+                const prod = new Product( 
+                    _prod.title, 
+                    _prod.price,
+                    unixToDateHR( Number( _prod.prodDate ) ),
+                    _prod.description,
+                    _prod.image,
+                    _prod.id,
+                );
+
+                resolve( prod );
+            } ).catch( err => {
+                reject( err );
+            } );
+        } );
+
+        return promise;
+    }
+
     set id ( id: number ) {
         if ( typeof id !== 'number' ) throw new Error( 'id should be number' );
         this._id = id;

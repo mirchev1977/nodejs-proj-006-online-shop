@@ -41,3 +41,21 @@ export function postAdminAddProduct ( req, res, next ) {
     } );
 
 }
+
+export function getAdminEditProduct ( req, res, next ) {
+    accessController( req, res, next, { isLogged: true
+        , roles: { user: 1, admin: 1 } } );
+
+    Product.getOneByPk( 
+        ( req.params.id * 1 ) 
+    ).then( _product => {
+        res.render( 'admin/product-edit', {
+            usr: {}, 
+            userLogged: req[ 'userLogged' ],
+            prod: _product || {},
+            ERR:  req.err || ""
+        });
+    } ).catch( _err => {
+        res.redirect( '/products/mine' + `?cont=1&err=${_err}` );
+    } );
+}

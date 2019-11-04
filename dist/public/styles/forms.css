@@ -32,3 +32,15 @@
 .form-reg-log_field.submit button {
     font-size: 17px;
 }
+
+.form-wrapper {
+    display: flex;
+}
+
+.image-wrapper {
+    width: 50%;
+}
+
+.image-wrapper__image {
+    width: 100%;
+}

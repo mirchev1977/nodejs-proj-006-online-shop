@@ -1,0 +1,65 @@
+extends ../main-layout.pug
+
+block append main-layout__head__stylesheets
+    link( rel="stylesheet" href="/styles/forms.css" type="text/css" )
+
+block main-layout__header__err
+    div#err=ERR
+
+block main-layout__header__menu__current
+    a( href="/" )
+        li Home
+    a( href="/products/all" )
+        li Products
+    a( href="/products/mine" )
+        li My Products
+    if userLogged.role === 'admin'
+        a( href="/admin/product/new" )
+            li Add a Product
+
+block main-layout__block
+    h1 Product - Edit
+    div.form-wrapper
+        form( method="POST" action="/admin/product/new" class="form-reg-log" )
+            input( type="hidden" name="path" id="path" value=`${path}`)
+            div( class="form-reg-log_field" )
+                label( for="title" ) Title*
+                input( type="text" name="title" id="title" value=`${prod['title'] || ''}`)
+            div( class="form-reg-log_field" )
+                label( for="price" ) Price*
+                input( type="text" name="price" id="price" value=`${prod['price'] || ''}`)
+            div( class="form-reg-log_field" )
+                label( for="prodDate" ) Production Date*
+                input( 
+                    type="text" 
+                    name="prodDate" 
+                    id="prodDate" 
+                    placeholder="dd.mm.yyyy"
+                    value=`${prod['prodDate'] || ''}`
+                )
+            div( class="form-reg-log_field" )
+                label( for="description" ) Description*
+                textarea( 
+                    rows=8
+                    type="text" 
+                    name="description" 
+                    id="description")=`${prod['description'] || ''}`
+            div( class="form-reg-log_field" )
+                label( for="image" ) Image*
+                input( type="text" name="image" id="image" value=`${prod['image'] || ''}`)
+            div( class="form-reg-log_field submit" )
+                label( for="password_repeat" ) 
+                button( type="submit" ) Submit
+        div.image-wrapper
+            img.image-wrapper__image( src=`${prod['image']}` )
+
+        if userLogged.role === 'admin'
+            style.
+                .main-layout__menu {
+                    grid-template-columns: 100px 100px 125px 125px 1fr 100px;
+                }
+        else
+            style.
+                .main-layout__menu {
+                    grid-template-columns: 100px 100px 125px 1fr 100px;
+                }

@@ -37,6 +37,17 @@ class Product {
     static getMine(usrId = null) {
         return Product._getArrProducts(usrId);
     }
+    static getOneByPk(pk) {
+        const promise = new Promise((resolve, reject) => {
+            repositories_product_1.default.findByPk(pk).then(_prod => {
+                const prod = new Product(_prod.title, _prod.price, date_1.unixToDateHR(Number(_prod.prodDate)), _prod.description, _prod.image, _prod.id);
+                resolve(prod);
+            }).catch(err => {
+                reject(err);
+            });
+        });
+        return promise;
+    }
     set id(id) {
         if (typeof id !== 'number')
             throw new Error('id should be number');

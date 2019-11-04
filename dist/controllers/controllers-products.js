@@ -22,7 +22,9 @@ function getMyProducts(req, res, next) {
     models_product_1.default.getMine(req.userLogged.id).then(arrProducts => {
         res.render('products/mine', {
             userLogged: req['userLogged'],
-            arrProducts: arrProducts
+            arrProducts: arrProducts,
+            ERR: req.query.err || '',
+            CONT: req.query.cont || ''
         });
     }).catch(errMess => {
         res.render('products/mine', {
