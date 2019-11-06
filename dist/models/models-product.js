@@ -48,6 +48,23 @@ class Product {
         });
         return promise;
     }
+    static edit(prod) {
+        const promise = new Promise((resolve, reject) => {
+            repositories_product_1.default.findByPk(prod.id).then(_prod => {
+                _prod.update({
+                    title: prod.title,
+                    price: prod.price,
+                    prodDate: prod.prodUnixDate,
+                    description: prod.description,
+                    image: prod.image,
+                });
+                resolve(_prod);
+            }).catch(err => {
+                reject(err);
+            });
+        });
+        return promise;
+    }
     set id(id) {
         if (typeof id !== 'number')
             throw new Error('id should be number');

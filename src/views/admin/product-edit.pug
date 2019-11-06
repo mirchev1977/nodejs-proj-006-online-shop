@@ -20,8 +20,8 @@ block main-layout__header__menu__current
 block main-layout__block
     h1 Product - Edit
     div.form-wrapper
-        form( method="POST" action="/admin/product/new" class="form-reg-log" )
-            input( type="hidden" name="path" id="path" value=`${path}`)
+        form( method="POST" action="/admin/product/edit" class="form-reg-log" )
+            input( type="hidden" name="id"   id="id"   value=`${prod['id']}`)
             div( class="form-reg-log_field" )
                 label( for="title" ) Title*
                 input( type="text" name="title" id="title" value=`${prod['title'] || ''}`)

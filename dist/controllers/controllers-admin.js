@@ -53,4 +53,19 @@ function getAdminEditProduct(req, res, next) {
     });
 }
 exports.getAdminEditProduct = getAdminEditProduct;
+function postAdminEditProduct(req, res, next) {
+    access_controller_1.default(req, res, next, { isLogged: true,
+        roles: { user: 1, admin: 1 } });
+    models_product_1.default.edit(new models_product_1.default(req.body.title, req.body.price, req.body.prodDate, req.body.description, req.body.image, req.body.id * 1)).then(prod => {
+        res.redirect('/products/mine');
+    }).catch(err => {
+        res.render('admin/product-edit', {
+            usr: {},
+            userLogged: req['userLogged'],
+            prod: req.body || {},
+            ERR: err || ""
+        });
+    });
+}
+exports.postAdminEditProduct = postAdminEditProduct;
 //# sourceMappingURL=controllers-admin.js.map

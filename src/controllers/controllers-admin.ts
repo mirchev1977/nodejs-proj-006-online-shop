@@ -59,3 +59,26 @@ export function getAdminEditProduct ( req, res, next ) {
         res.redirect( '/products/mine' + `?cont=1&err=${_err}` );
     } );
 }
+
+export function postAdminEditProduct( req, res, next ) {
+    accessController( req, res, next, { isLogged: true
+        , roles: { user: 1, admin: 1 } } );
+
+    Product.edit( new Product( 
+        req.body.title,
+        req.body.price,
+        req.body.prodDate,
+        req.body.description,
+        req.body.image,
+        req.body.id * 1
+    ) ).then( prod => {
+        res.redirect( '/products/mine' );
+    } ).catch( err => {
+        res.render( 'admin/product-edit', {
+            usr: {}, 
+            userLogged: req[ 'userLogged' ],
+            prod: req.body || {},
+            ERR:  err || ""
+        });
+    } ); 
+}

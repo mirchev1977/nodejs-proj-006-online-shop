@@ -16,5 +16,6 @@ const router = express_1.default.Router();
 router.get('/product/new', controllersUser.getAdminAddProduct);
 router.post('/product/new', controllersUser.postAdminAddProduct);
 router.get('/product/edit/:id', controllersUser.getAdminEditProduct);
+router.post('/product/edit', controllersUser.postAdminEditProduct);
 exports.default = router;
 //# sourceMappingURL=routes-admin.js.map

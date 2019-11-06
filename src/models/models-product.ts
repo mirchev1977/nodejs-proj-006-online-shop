@@ -73,6 +73,26 @@ export default class Product {
         return promise;
     }
 
+    static edit( prod: Product ): Promise<any> {
+        const promise: Promise<string> = new Promise( ( resolve, reject ) => {
+            ProductRepo.findByPk( prod.id ).then( _prod => {
+                _prod.update( {
+                    title:       prod.title,
+                    price:       prod.price,
+                    prodDate:    prod.prodUnixDate,
+                    description: prod.description,
+                    image:       prod.image,
+                } );
+
+                resolve( _prod );
+            } ).catch( err => {
+                reject( err );
+            } );
+        } );
+
+        return promise;
+    }
+
     set id ( id: number ) {
         if ( typeof id !== 'number' ) throw new Error( 'id should be number' );
         this._id = id;

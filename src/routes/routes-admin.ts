@@ -10,5 +10,6 @@ router.get(  '/product/new',  controllersUser.getAdminAddProduct  );
 router.post(  '/product/new', controllersUser.postAdminAddProduct );
 
 router.get(  '/product/edit/:id',  controllersUser.getAdminEditProduct  );
+router.post(  '/product/edit',     controllersUser.postAdminEditProduct  );
 
 export default router;
