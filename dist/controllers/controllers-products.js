@@ -24,7 +24,8 @@ function getMyProducts(req, res, next) {
             userLogged: req['userLogged'],
             arrProducts: arrProducts,
             ERR: req.query.err || '',
-            CONT: req.query.cont || ''
+            CONT: req.query.cont || '',
+            prodId: req.query.prodId || ''
         });
     }).catch(errMess => {
         res.render('products/mine', {

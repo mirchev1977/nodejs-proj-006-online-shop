@@ -64,21 +64,38 @@ export function postAdminEditProduct( req, res, next ) {
     accessController( req, res, next, { isLogged: true
         , roles: { user: 1, admin: 1 } } );
 
-    Product.edit( new Product( 
-        req.body.title,
-        req.body.price,
-        req.body.prodDate,
-        req.body.description,
-        req.body.image,
-        req.body.id * 1
-    ) ).then( prod => {
-        res.redirect( '/products/mine' );
-    } ).catch( err => {
+    try { 
+        new Product( 
+                req.body.title,
+                req.body.price,
+                req.body.prodDate,
+                req.body.description,
+                req.body.image,
+                req.body.id * 1
+            ) 
+            Product.edit( new Product( 
+                req.body.title,
+                req.body.price,
+                req.body.prodDate,
+                req.body.description,
+                req.body.image,
+                req.body.id * 1
+            ) ).then( prod => {
+                res.redirect( '/products/mine?prodId=container-product-' + prod.id );
+            } ).catch( err => {
+                res.render( 'admin/product-edit', {
+                    usr: {}, 
+                    userLogged: req[ 'userLogged' ],
+                    prod: req.body || {},
+                    ERR:  err || ""
+                });
+            } ); 
+    } catch ( err ) {
         res.render( 'admin/product-edit', {
             usr: {}, 
             userLogged: req[ 'userLogged' ],
             prod: req.body || {},
-            ERR:  err || ""
+            ERR:  err.message || ""
         });
-    } ); 
+    }
 }

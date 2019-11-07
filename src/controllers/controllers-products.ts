@@ -19,8 +19,9 @@ export function getMyProducts ( req, res, next ) {
         res.render( 'products/mine', { 
             userLogged: req[ 'userLogged' ]
             , arrProducts: arrProducts 
-            , ERR:  req.query.err  || ''
-            , CONT: req.query.cont || ''
+            , ERR:    req.query.err  || ''
+            , CONT:   req.query.cont || ''
+            , prodId: req.query.prodId || ''
         } );
     }).catch( errMess => {
         res.render( 'products/mine', { 
