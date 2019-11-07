@@ -65,6 +65,14 @@ class Product {
         });
         return promise;
     }
+    static delete(prodId) {
+        prodId *= 1;
+        return repositories_product_1.default
+            .findByPk(prodId)
+            .then(prod => {
+            return prod.destroy();
+        });
+    }
     set id(id) {
         if (typeof id !== 'number')
             throw new Error('id should be number');

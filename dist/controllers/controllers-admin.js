@@ -79,4 +79,15 @@ function postAdminEditProduct(req, res, next) {
     }
 }
 exports.postAdminEditProduct = postAdminEditProduct;
+function getAdminDeleteProduct(req, res, next) {
+    access_controller_1.default(req, res, next, { isLogged: true,
+        roles: { user: 1, admin: 1 } });
+    models_product_1.default.delete(req.params.id)
+        .then(_product => {
+        res.redirect('/products/mine');
+    }).catch(_err => {
+        res.redirect('/products/mine' + `?cont=1&err=${_err}`);
+    });
+}
+exports.getAdminDeleteProduct = getAdminDeleteProduct;
 //# sourceMappingURL=controllers-admin.js.map

@@ -99,3 +99,15 @@ export function postAdminEditProduct( req, res, next ) {
         });
     }
 }
+
+export function getAdminDeleteProduct ( req, res, next ) {
+    accessController( req, res, next, { isLogged: true
+        , roles: { user: 1, admin: 1 } } );
+
+    Product.delete( req.params.id )
+    .then( _product => {
+        res.redirect( '/products/mine' );
+    } ).catch( _err => {
+        res.redirect( '/products/mine' + `?cont=1&err=${_err}` );
+    } );
+}

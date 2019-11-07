@@ -93,6 +93,15 @@ export default class Product {
         return promise;
     }
 
+    static delete( prodId: number ) {
+        prodId *= 1;
+        return ProductRepo
+            .findByPk( prodId )
+            .then( prod => {
+                return prod.destroy();
+            } );
+    }
+
     set id ( id: number ) {
         if ( typeof id !== 'number' ) throw new Error( 'id should be number' );
         this._id = id;
