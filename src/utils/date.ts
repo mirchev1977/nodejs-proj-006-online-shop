@@ -3,7 +3,7 @@ export function dateHRtoUnix ( prodDate: string ): string {
     regex += '\\s*\.\\s*';
     regex += '(?<MM>(?:0[1-9])|(?:1[012]))';
     regex += '\\s*\.\\s*';
-    regex += '(?<YYYY>(?:19\d{2})|(?:2\\d{3}))';
+    regex += '(?<YYYY>(?:19\\d{2})|(?:2\\d{3}))';
 
     let regExp = new RegExp( regex );
 
