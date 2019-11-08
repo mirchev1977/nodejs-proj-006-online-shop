@@ -20,6 +20,10 @@ block main-layout__header__err
 
 block main-layout__block
     if ( !ERR || CONT )
+        select( id="sort" )
+            option Sort By
+            option( value='/products/mine?sort=title' ) By Title
+            option( value='/products/mine?sort=price' ) By Price
         div#prod-edited( display: none )=`${prodId}`
         div.container-products
             each prod in arrProducts
@@ -47,3 +51,9 @@ block main-layout__block
                 let prodEdited = document.getElementById( edited.innerText );
                 prodEdited.setAttribute( 'style', 'background-color: yellowgreen' );
             }
+
+            let selectSort = document.getElementById( 'sort' );
+            selectSort.addEventListener( 'change', function ( ev ) {
+                let href = this.options[ this.selectedIndex ].value
+                window.location.href = href;
+            } );
