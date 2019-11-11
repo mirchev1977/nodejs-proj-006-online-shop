@@ -31,11 +31,11 @@ class Product {
         });
         return promise;
     }
-    static getAll() {
-        return Product._getArrProducts(null);
+    static getAll(query) {
+        return Product._getArrProducts(null, query);
     }
-    static getMine(usrId = null) {
-        return Product._getArrProducts(usrId);
+    static getMine(usrId = null, query) {
+        return Product._getArrProducts(usrId, query);
     }
     static getOneByPk(pk) {
         const promise = new Promise((resolve, reject) => {
@@ -137,7 +137,7 @@ class Product {
             });
         }
     }
-    static _getArrProducts(usrId) {
+    static _getArrProducts(usrId, query) {
         const promise = new Promise((resolve, reject) => {
             Product._productFindAll(usrId).then(arrProducts => {
                 const _arrProducts = [];
@@ -151,6 +151,20 @@ class Product {
                         reject(err);
                     }
                     _arrProducts.push(_prodct);
+                });
+                _arrProducts.sort((_a, _b) => {
+                    if (query.sort === 'title') {
+                        return _a.title.localeCompare(_b.title);
+                    }
+                    else if (query.sort === 'price') {
+                        return _a.price - _b.price;
+                    }
+                    else if (query.sort === 'prodDate') {
+                        return _a.prodUnixDate - _b.prodUnixDate;
+                    }
+                    else {
+                        return _a.id - _b.id;
+                    }
                 });
                 resolve(_arrProducts);
             }).catch(errMess => {

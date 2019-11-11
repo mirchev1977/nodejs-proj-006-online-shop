@@ -44,12 +44,12 @@ export default class Product {
         return promise;
     } 
 
-    static getAll(): Promise<Product[]> {
-        return Product._getArrProducts( null );
+    static getAll( query: { sort: string } ): Promise<Product[]> {
+        return Product._getArrProducts( null, query );
     }
 
-    static getMine( usrId: number = null ): Promise<Product[]> {
-        return Product._getArrProducts( usrId );
+    static getMine( usrId: number = null, query: { sort: string } ): Promise<Product[]> {
+        return Product._getArrProducts( usrId, query );
     }
 
     static getOneByPk ( pk: number ): Promise<Product> {
@@ -174,7 +174,10 @@ export default class Product {
         }
     }
 
-    private static _getArrProducts ( usrId: number ): Promise<Product[]> {
+    private static _getArrProducts ( 
+        usrId: number, 
+        query: { sort: string } 
+    ): Promise<Product[]> {
         const promise = new Promise<Product[]>( ( resolve, reject ) => {
             Product._productFindAll( usrId ).then( arrProducts => {
                 const _arrProducts = [];
@@ -193,6 +196,18 @@ export default class Product {
                     }
                     _arrProducts.push( _prodct );
                 });
+
+                _arrProducts.sort( (  _a: Product, _b: Product ) => {
+                    if ( query.sort === 'title' ) {
+                        return _a.title.localeCompare( _b.title );
+                    } else if ( query.sort === 'price' ) {
+                        return _a.price - _b.price;
+                    } else if ( query.sort === 'prodDate' ) {
+                        return _a.prodUnixDate - _b.prodUnixDate;
+                    } else {
+                        return _a.id - _b.id;
+                    }
+                } );
 
                 resolve( _arrProducts );
             } ).catch( errMess => {

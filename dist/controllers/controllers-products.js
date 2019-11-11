@@ -5,32 +5,36 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const models_product_1 = __importDefault(require("../models/models-product"));
 function getAllProducts(req, res, next) {
-    models_product_1.default.getAll().then(arrProducts => {
+    models_product_1.default.getAll(req.query).then(arrProducts => {
         res.render('products/all', {
             userLogged: req['userLogged'],
-            arrProducts: arrProducts
+            arrProducts: arrProducts,
+            sort: req.query.sort
         });
     }).catch(errMess => {
         res.render('products/all', {
             userLogged: req['userLogged'],
-            ERR: errMess.message
+            ERR: errMess.message,
+            sort: req.query.sort
         });
     });
 }
 exports.getAllProducts = getAllProducts;
 function getMyProducts(req, res, next) {
-    models_product_1.default.getMine(req.userLogged.id).then(arrProducts => {
+    models_product_1.default.getMine(req.userLogged.id, req.query).then(arrProducts => {
         res.render('products/mine', {
             userLogged: req['userLogged'],
             arrProducts: arrProducts,
             ERR: req.query.err || '',
             CONT: req.query.cont || '',
-            prodId: req.query.prodId || ''
+            prodId: req.query.prodId || '',
+            sort: req.query.sort
         });
     }).catch(errMess => {
         res.render('products/mine', {
             userLogged: req['userLogged'],
-            ERR: errMess.message
+            ERR: errMess.message,
+            sort: req.query.sort
         });
     });
 }

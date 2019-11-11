@@ -22,8 +22,18 @@ block main-layout__block
     if ( !ERR || CONT )
         select( id="sort" )
             option Sort By
-            option( value='/products/mine?sort=title' ) By Title
-            option( value='/products/mine?sort=price' ) By Price
+            if sort === 'title'
+                option( value='/products/mine?sort=title', selected = 'selected' ) By Title
+            else
+                option( value='/products/mine?sort=title'    ) By Title
+            if sort === 'price'
+                option( value='/products/mine?sort=price', selected = 'selected' ) By Price
+            else 
+                option( value='/products/mine?sort=price') By Price
+            if sort === 'prodDate'
+                option( value='/products/mine?sort=prodDate', selected = 'selected' ) By Product Date
+            else
+                option( value='/products/mine?sort=prodDate' ) By Product Date
         div#prod-edited( display: none )=`${prodId}`
         div.container-products
             each prod in arrProducts
@@ -33,7 +43,7 @@ block main-layout__block
                         hr
                         p='Price: ' + prod.price
                         hr
-                        p='Issued on: ' + prod.prodDate
+                        p='Produced On: ' + prod.prodDate
                         hr
                         p='Description: ' + prod.description
                     div.container-product__image-cont
@@ -55,5 +65,6 @@ block main-layout__block
             let selectSort = document.getElementById( 'sort' );
             selectSort.addEventListener( 'change', function ( ev ) {
                 let href = this.options[ this.selectedIndex ].value
+                if ( href === 'Sort By' ) href = '';
                 window.location.href = href;
             } );
