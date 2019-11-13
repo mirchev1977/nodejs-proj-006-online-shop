@@ -9,6 +9,7 @@ export default class User {
     private _password:  string;
     public  loginToken: string;
     private _role:      string;
+    public  repo:       any;
 
     constructor ( names, email, password, passwordRepeat, id = 0 ) {
 
@@ -33,9 +34,12 @@ export default class User {
                 password: this.password,
                 role:     this.role,
             } ).then( usr => {
+                usr.createCart();
+                return Promise.resolve( usr );
+            } ).then( usr => {
                 const login: Login = new Login( usr );
                 return login.createLogin();
-            } ).then( loginToken => {
+            } ) .then( loginToken => {
                 this.loginToken = loginToken;
                 resolve( this );
             } ).catch( err => {

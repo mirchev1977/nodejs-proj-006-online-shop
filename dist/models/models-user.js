@@ -26,6 +26,9 @@ class User {
                 password: this.password,
                 role: this.role,
             }).then(usr => {
+                usr.createCart();
+                return Promise.resolve(usr);
+            }).then(usr => {
                 const login = new models_login_1.default(usr);
                 return login.createLogin();
             }).then(loginToken => {
