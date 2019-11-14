@@ -7,6 +7,7 @@ const repositories_user_1 = __importDefault(require("./repositories-user"));
 const repositories_login_1 = __importDefault(require("./repositories-login"));
 const repositories_product_1 = __importDefault(require("./repositories-product"));
 const repositories_cart_1 = __importDefault(require("./repositories-cart"));
+const repositories_cart_product_1 = __importDefault(require("./repositories-cart-product"));
 function createRelations() {
     repositories_login_1.default.belongsTo(repositories_user_1.default, { constraints: true, onDelete: "CASCADE" });
     repositories_user_1.default.hasMany(repositories_login_1.default);
@@ -14,6 +15,8 @@ function createRelations() {
     repositories_user_1.default.hasMany(repositories_product_1.default);
     repositories_cart_1.default.belongsTo(repositories_user_1.default, { constraints: true, onDelete: "CASCADE" });
     repositories_user_1.default.hasOne(repositories_cart_1.default);
+    repositories_cart_1.default.belongsToMany(repositories_product_1.default, { as: 'Item', through: repositories_cart_product_1.default, foreignKey: 'cartId' });
+    repositories_product_1.default.belongsToMany(repositories_cart_1.default, { as: 'Basket', through: repositories_cart_product_1.default, foreignKey: 'productId' });
 }
 exports.default = createRelations;
 //# sourceMappingURL=repositories.js.map

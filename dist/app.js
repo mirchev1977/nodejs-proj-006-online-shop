@@ -32,7 +32,9 @@ app.get('/', (req, res, next) => {
 app.use((req, res, next) => {
     res.render('404', { userLogged: req['userLogged'] });
 });
-sequelize.sync({ force: true }).then(result => {
+sequelize.sync(
+//{ force: true } 
+).then(result => {
     app.listen(process.env.PORT || 3000, () => {
         console.log('Listening on port 3000');
     });
