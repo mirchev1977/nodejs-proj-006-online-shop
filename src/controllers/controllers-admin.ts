@@ -44,7 +44,7 @@ export function postAdminAddProduct ( req, res, next ) {
 
 export function getAdminEditProduct ( req, res, next ) {
     accessController( req, res, next, { isLogged: true
-        , roles: { user: 1, admin: 1 } } );
+        , roles: { admin: 1 } } );
 
     Product.getOneByPk( 
         ( req.params.id * 1 ) 
@@ -62,7 +62,7 @@ export function getAdminEditProduct ( req, res, next ) {
 
 export function postAdminEditProduct( req, res, next ) {
     accessController( req, res, next, { isLogged: true
-        , roles: { user: 1, admin: 1 } } );
+        , roles: { admin: 1 } } );
 
     try { 
         new Product( 
@@ -102,7 +102,7 @@ export function postAdminEditProduct( req, res, next ) {
 
 export function getAdminDeleteProduct ( req, res, next ) {
     accessController( req, res, next, { isLogged: true
-        , roles: { user: 1, admin: 1 } } );
+        , roles: { admin: 1 } } );
 
     Product.delete( req.params.id )
     .then( _product => {

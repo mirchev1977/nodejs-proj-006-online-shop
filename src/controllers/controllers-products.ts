@@ -1,4 +1,5 @@
-import Product from '../models/models-product';
+import Product          from '../models/models-product';
+import accessController from '../utils/access_controller';
 
 export function getAllProducts ( req, res, next ) {
     Product.getAll( req.query ).then( arrProducts => {
@@ -17,6 +18,9 @@ export function getAllProducts ( req, res, next ) {
 }
 
 export function getMyProducts ( req, res, next ) {
+    accessController( req, res, next, { isLogged: true
+        , roles: { admin: 1 } } );
+
     Product.getMine( req.userLogged.id, req.query ).then( arrProducts => {
         res.render( 'products/mine', { 
             userLogged: req[ 'userLogged' ]

@@ -5,10 +5,9 @@ block main-layout__header__menu__current
         li Home
     a( href="/products/all" )
         li( class="active" ) Products
-    if userLogged
+    if userLogged && userLogged.role === 'admin'
         a( href="/products/mine" )
             li My Products
-    if userLogged && userLogged.role === 'admin'
         a( href="/admin/product/new" )
             li Add a Product
 
