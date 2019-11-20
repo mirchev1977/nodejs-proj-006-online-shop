@@ -45,28 +45,30 @@ function getMyProducts(req, res, next) {
 exports.getMyProducts = getMyProducts;
 function getAddProductToCart(req, res, next) {
     const itemId = req.params.id * 1;
+    let mainBasket = null;
+    let quantity = 0;
     req.userLogged.repo.getCart().then(basket => {
-        basket.getItem({ where: { id: itemId } }).then(items => {
+        mainBasket = basket;
+        return basket.getItem({ where: { id: itemId } }).then(items => {
             const item = items[0];
-            let quantity = 0;
             if (item) {
                 quantity = item.cart_product.quantity || 0;
             }
             quantity++;
-            return repositories_product_1.default.findByPk(itemId).then(prod => {
-                return basket.addItem(prod, { through: { quantity: quantity } });
-            });
-        }).then(item => {
-            debugger;
-        })
-            .catch(err => {
-            debugger;
+            return repositories_product_1.default.findByPk(itemId);
         });
-    }).throw(err => {
+    })
+        .then(prod => {
+        return mainBasket.addItem(prod, { through: { quantity: quantity } });
+    })
+        .then(arrItemAdded => {
         debugger;
+        next();
+    })
+        .catch(err => {
+        debugger;
+        next();
     });
-    console.log(req.params);
-    next();
 }
 exports.getAddProductToCart = getAddProductToCart;
 //# sourceMappingURL=controllers-products.js.map
