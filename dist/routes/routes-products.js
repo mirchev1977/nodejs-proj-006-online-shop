@@ -15,5 +15,6 @@ const controllersProducts = __importStar(require("../controllers/controllers-pro
 const router = express_1.default.Router();
 router.get('/all', controllersProducts.getAllProducts);
 router.get('/mine', controllersProducts.getMyProducts);
+router.get('/add/:id', controllersProducts.getAddProductToCart);
 exports.default = router;
 //# sourceMappingURL=routes-products.js.map

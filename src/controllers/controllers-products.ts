@@ -1,4 +1,5 @@
 import Product          from '../models/models-product';
+import ProductRepo      from '../repositories/repositories-product';
 import accessController from '../utils/access_controller';
 
 export function getAllProducts ( req, res, next ) {
@@ -37,4 +38,33 @@ export function getMyProducts ( req, res, next ) {
             sort: req.query.sort
         } ); 
     } );
+}
+
+export function getAddProductToCart ( req, res, next ) {
+    const itemId = req.params.id * 1;
+    req.userLogged.repo.getCart().then( basket => {
+        basket.getItem( { where: { id: itemId } } ).then( items => {
+            const item = items[ 0 ];
+            let quantity = 0;
+            if ( item ) {
+                quantity = item.cart_product.quantity || 0;
+            }
+
+            quantity++;
+
+            return ProductRepo.findByPk( itemId ).then( prod => {
+                return basket.addItem( prod, { through: { quantity: quantity } }  ); 
+            } ).catch( err => {
+                return Promise.reject( err );
+            } ); 
+        } ).then( itemAdded => {
+            debugger;
+        } )
+        .catch( err => {
+            return Promise.reject( err );
+        } );
+    } ).catch( err => {
+        debugger;
+    } );
+    next();
 }
