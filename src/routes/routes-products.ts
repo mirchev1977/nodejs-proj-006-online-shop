@@ -10,4 +10,6 @@ router.get(  '/all',     controllersProducts.getAllProducts      );
 router.get(  '/mine',    controllersProducts.getMyProducts       );
 router.get(  '/add/:id', controllersProducts.getAddProductToCart );
 
+router.get(  '/cart',     controllersProducts.getCartProducts    );
+
 export default router;

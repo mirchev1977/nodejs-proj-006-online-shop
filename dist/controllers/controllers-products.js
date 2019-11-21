@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const models_product_1 = __importDefault(require("../models/models-product"));
 const repositories_product_1 = __importDefault(require("../repositories/repositories-product"));
 const access_controller_1 = __importDefault(require("../utils/access_controller"));
+const date_1 = require("../utils/date");
 function getAllProducts(req, res, next) {
     models_product_1.default.getAll(req.query).then(arrProducts => {
         res.render('products/all', {
@@ -62,8 +63,7 @@ function getAddProductToCart(req, res, next) {
         return mainBasket.addItem(prod, { through: { quantity: quantity } });
     })
         .then(arrItemAdded => {
-        debugger;
-        next();
+        res.redirect('/products/cart');
     })
         .catch(err => {
         debugger;
@@ -71,4 +71,28 @@ function getAddProductToCart(req, res, next) {
     });
 }
 exports.getAddProductToCart = getAddProductToCart;
+function getCartProducts(req, res, next) {
+    access_controller_1.default(req, res, next, { isLogged: true,
+        roles: { user: 1, admin: 1 } });
+    req.userLogged.repo.getCart().then(basket => {
+        return basket.getItem();
+    }).then(arrItems => {
+        const _arrItems = arrItems.map(itm => {
+            return new models_product_1.default(itm.title, itm.price, date_1.unixToDateHR(Number(itm.prodDate)), itm.description, itm.image, itm.id);
+        });
+        res.render('products/added-cart', {
+            userLogged: req['userLogged'],
+            arrProducts: _arrItems,
+            ERR: req.query.err || '',
+            CONT: req.query.cont || '',
+            prodId: req.query.prodId || '',
+            sort: req.query.sort
+        });
+    })
+        .catch(err => {
+        debugger;
+        next();
+    });
+}
+exports.getCartProducts = getCartProducts;
 //# sourceMappingURL=controllers-products.js.map
