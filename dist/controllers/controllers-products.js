@@ -80,6 +80,7 @@ function getCartProducts(req, res, next) {
         const _arrItems = arrItems.map(itm => {
             return new models_product_1.default(itm.title, itm.price, date_1.unixToDateHR(Number(itm.prodDate)), itm.description, itm.image, itm.id);
         });
+        models_product_1.default.sort(_arrItems, req.query.sort);
         res.render('products/added-cart', {
             userLogged: req['userLogged'],
             arrProducts: _arrItems,

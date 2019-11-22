@@ -102,6 +102,20 @@ export default class Product {
             } );
     }
 
+    static sort ( products: Product[], criteria: string ) {
+        products.sort( (  _a: Product, _b: Product ) => {
+            if ( criteria === 'title' ) {
+                return _a.title.localeCompare( _b.title );
+            } else if ( criteria === 'price' ) {
+                return _a.price - _b.price;
+            } else if ( criteria === 'prodDate' ) {
+                return _a.prodUnixDate - _b.prodUnixDate;
+            } else {
+                return _a.id - _b.id;
+            }
+        } );
+    }
+
     set id ( id: number ) {
         if ( typeof id !== 'number' ) throw new Error( 'id should be number' );
         this._id = id;
@@ -197,17 +211,7 @@ export default class Product {
                     _arrProducts.push( _prodct );
                 });
 
-                _arrProducts.sort( (  _a: Product, _b: Product ) => {
-                    if ( query.sort === 'title' ) {
-                        return _a.title.localeCompare( _b.title );
-                    } else if ( query.sort === 'price' ) {
-                        return _a.price - _b.price;
-                    } else if ( query.sort === 'prodDate' ) {
-                        return _a.prodUnixDate - _b.prodUnixDate;
-                    } else {
-                        return _a.id - _b.id;
-                    }
-                } );
+                Product.sort( _arrProducts, query.sort ); 
 
                 resolve( _arrProducts );
             } ).catch( errMess => {

@@ -90,6 +90,8 @@ export function getCartProducts ( req, res, next ) {
             ); 
         } );
 
+        Product.sort( _arrItems, req.query.sort ); 
+
         res.render( 'products/added-cart', { 
             userLogged: req[ 'userLogged' ]
             , arrProducts: _arrItems 

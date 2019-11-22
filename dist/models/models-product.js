@@ -73,6 +73,22 @@ class Product {
             return prod.destroy();
         });
     }
+    static sort(products, criteria) {
+        products.sort((_a, _b) => {
+            if (criteria === 'title') {
+                return _a.title.localeCompare(_b.title);
+            }
+            else if (criteria === 'price') {
+                return _a.price - _b.price;
+            }
+            else if (criteria === 'prodDate') {
+                return _a.prodUnixDate - _b.prodUnixDate;
+            }
+            else {
+                return _a.id - _b.id;
+            }
+        });
+    }
     set id(id) {
         if (typeof id !== 'number')
             throw new Error('id should be number');
@@ -152,20 +168,18 @@ class Product {
                     }
                     _arrProducts.push(_prodct);
                 });
-                _arrProducts.sort((_a, _b) => {
-                    if (query.sort === 'title') {
-                        return _a.title.localeCompare(_b.title);
-                    }
-                    else if (query.sort === 'price') {
-                        return _a.price - _b.price;
-                    }
-                    else if (query.sort === 'prodDate') {
-                        return _a.prodUnixDate - _b.prodUnixDate;
-                    }
-                    else {
-                        return _a.id - _b.id;
-                    }
-                });
+                Product.sort(_arrProducts, query.sort);
+                //_arrProducts.sort( (  _a: Product, _b: Product ) => {
+                //    if ( query.sort === 'title' ) {
+                //        return _a.title.localeCompare( _b.title );
+                //    } else if ( query.sort === 'price' ) {
+                //        return _a.price - _b.price;
+                //    } else if ( query.sort === 'prodDate' ) {
+                //        return _a.prodUnixDate - _b.prodUnixDate;
+                //    } else {
+                //        return _a.id - _b.id;
+                //    }
+                //} );
                 resolve(_arrProducts);
             }).catch(errMess => {
                 reject(errMess);
