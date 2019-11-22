@@ -11,6 +11,9 @@ block main-layout__header__menu__current
         li Home
     a( href="/products/all" )
         li Products
+    if userLogged
+        a( href="/products/cart" )
+            li Cart
     a( href="/products/mine" )
         li My Products
     if userLogged.role === 'admin'
@@ -56,7 +59,7 @@ block main-layout__block
         if userLogged.role === 'admin'
             style.
                 .main-layout__menu {
-                    grid-template-columns: 100px 100px 125px 125px 1fr 100px;
+                    grid-template-columns: 100px 100px 100px 125px 125px 1fr 100px;
                 }
         else
             style.

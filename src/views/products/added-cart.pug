@@ -4,7 +4,9 @@ block main-layout__header__menu__current
     a( href="/" )
         li Home
     a( href="/products/all" )
-        li( class="active" ) Products
+        li Products
+    a( href="/products/cart" )
+        li( class="active" ) Cart
     if userLogged && userLogged.role === 'admin'
         a( href="/products/mine" )
             li My Products
@@ -22,17 +24,17 @@ block main-layout__block
         select( id="sort" )
             option Sort By
             if sort === 'title'
-                option( value='/products/all?sort=title', selected = 'selected' ) By Title
+                option( value='/products/cart?sort=title', selected = 'selected' ) By Title
             else
-                option( value='/products/all?sort=title'    ) By Title
+                option( value='/products/cart?sort=title'    ) By Title
             if sort === 'price'
-                option( value='/products/all?sort=price', selected = 'selected' ) By Price
+                option( value='/products/cart?sort=price', selected = 'selected' ) By Price
             else 
-                option( value='/products/all?sort=price') By Price
+                option( value='/products/cart?sort=price') By Price
             if sort === 'prodDate'
-                option( value='/products/all?sort=prodDate', selected = 'selected' ) By Product Date
+                option( value='/products/cart?sort=prodDate', selected = 'selected' ) By Product Date
             else
-                option( value='/products/all?sort=prodDate' ) By Product Date
+                option( value='/products/cart?sort=prodDate' ) By Product Date
         div.container-products
             each prod in arrProducts
                 div.container-product
