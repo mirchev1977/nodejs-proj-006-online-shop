@@ -65,14 +65,6 @@ export function postAdminEditProduct( req, res, next ) {
         , roles: { admin: 1 } } );
 
     try { 
-        new Product( 
-                req.body.title,
-                req.body.price,
-                req.body.prodDate,
-                req.body.description,
-                req.body.image,
-                req.body.id * 1
-            ) 
             Product.edit( new Product( 
                 req.body.title,
                 req.body.price,

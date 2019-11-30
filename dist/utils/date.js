@@ -11,7 +11,7 @@ function dateHRtoUnix(prodDate) {
     if (!match) {
         throw new Error('the prodDate should be in the format dd.mm.yyyyy');
     }
-    let dt = new Date(Number(match.groups.YYYY), Number(match.groups.MM), Number(match.groups.DD));
+    let dt = new Date(`${match.groups.YYYY}-${match.groups.MM}-${match.groups.DD}`);
     const utime = dt.getTime();
     if (Number.isNaN(utime))
         throw new Error('prodDate should be number');

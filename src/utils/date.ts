@@ -14,9 +14,7 @@ export function dateHRtoUnix ( prodDate: string ): string {
     }
 
     let dt = new Date( 
-        Number( match.groups.YYYY ), 
-        Number( match.groups.MM   ), 
-        Number( match.groups.DD   ) 
+        `${match.groups.YYYY}-${match.groups.MM}-${match.groups.DD}`
     );
 
     const utime = dt.getTime();

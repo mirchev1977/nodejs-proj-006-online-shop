@@ -169,17 +169,6 @@ class Product {
                     _arrProducts.push(_prodct);
                 });
                 Product.sort(_arrProducts, query.sort);
-                //_arrProducts.sort( (  _a: Product, _b: Product ) => {
-                //    if ( query.sort === 'title' ) {
-                //        return _a.title.localeCompare( _b.title );
-                //    } else if ( query.sort === 'price' ) {
-                //        return _a.price - _b.price;
-                //    } else if ( query.sort === 'prodDate' ) {
-                //        return _a.prodUnixDate - _b.prodUnixDate;
-                //    } else {
-                //        return _a.id - _b.id;
-                //    }
-                //} );
                 resolve(_arrProducts);
             }).catch(errMess => {
                 reject(errMess);
