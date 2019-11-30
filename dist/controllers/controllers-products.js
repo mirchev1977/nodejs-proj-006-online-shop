@@ -44,8 +44,10 @@ function getMyProducts(req, res, next) {
     });
 }
 exports.getMyProducts = getMyProducts;
-function getAddProductToCart(req, res, next) {
+function getAddRemoveProductToCart(req, res, next) {
     const itemId = req.params.id * 1;
+    const sortBy = req.query.sort || '';
+    const action = req.query.action;
     let mainBasket = null;
     let quantity = 0;
     req.userLogged.repo.getCart().then(basket => {
@@ -55,22 +57,41 @@ function getAddProductToCart(req, res, next) {
             if (item) {
                 quantity = item.cart_product.quantity || 0;
             }
-            quantity++;
+            if (action === 'add')
+                quantity++;
+            if (action === 'remove')
+                quantity--;
+            if (quantity < 1) {
+                quantity = 0;
+                item.cart_product.quantity = 0;
+                return item.cart_product.destroy();
+            }
+            ;
             return repositories_product_1.default.findByPk(itemId);
         });
     })
         .then(prod => {
-        return mainBasket.addItem(prod, { through: { quantity: quantity } });
+        if (prod.quantity <= 0) {
+            return 1;
+        }
+        else {
+            return mainBasket.addItem(prod, { through: { quantity: quantity } });
+        }
     })
         .then(arrItemAdded => {
-        res.redirect('/products/cart');
+        if (sortBy) {
+            res.redirect('/products/cart?sort=' + sortBy);
+        }
+        else {
+            res.redirect('/products/cart');
+        }
     })
         .catch(err => {
         debugger;
         next();
     });
 }
-exports.getAddProductToCart = getAddProductToCart;
+exports.getAddRemoveProductToCart = getAddRemoveProductToCart;
 function getCartProducts(req, res, next) {
     access_controller_1.default(req, res, next, { isLogged: true,
         roles: { user: 1, admin: 1 } });
@@ -78,7 +99,9 @@ function getCartProducts(req, res, next) {
         return basket.getItem();
     }).then(arrItems => {
         const _arrItems = arrItems.map(itm => {
-            return new models_product_1.default(itm.title, itm.price, date_1.unixToDateHR(Number(itm.prodDate)), itm.description, itm.image, itm.id);
+            const product = new models_product_1.default(itm.title, itm.price, date_1.unixToDateHR(Number(itm.prodDate)), itm.description, itm.image, itm.id);
+            product.quantity = itm.cart_product.quantity;
+            return product;
         });
         models_product_1.default.sort(_arrItems, req.query.sort);
         res.render('products/added-cart', {

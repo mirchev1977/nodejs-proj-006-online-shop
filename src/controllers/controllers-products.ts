@@ -41,8 +41,11 @@ export function getMyProducts ( req, res, next ) {
     } );
 }
 
-export function getAddProductToCart ( req, res, next ) {
+export function getAddRemoveProductToCart ( req, res, next ) {
     const itemId = req.params.id * 1;
+    const sortBy = req.query.sort || '';
+
+    const action = req.query.action;
 
     let mainBasket = null;
     let quantity = 0; 
@@ -54,16 +57,31 @@ export function getAddProductToCart ( req, res, next ) {
                 quantity = item.cart_product.quantity || 0;
             }
 
-            quantity++;
+            if ( action === 'add'    ) quantity++;
+            if ( action === 'remove' ) quantity--
+
+            if ( quantity < 1 ) {
+                quantity = 0;
+                item.cart_product.quantity = 0;
+                return item.cart_product.destroy();
+            };
 
             return ProductRepo.findByPk( itemId );
         } )
     } )
     .then( prod => {
-        return mainBasket.addItem( prod, { through: { quantity: quantity } } );
+        if ( prod.quantity <= 0 ) {
+            return 1;
+      } else { 
+          return mainBasket.addItem( prod, { through: { quantity: quantity } } ); 
+        }
     } )
     .then( arrItemAdded  => {
-        res.redirect( '/products/cart' );
+        if ( sortBy ) {
+            res.redirect( '/products/cart?sort=' + sortBy ); 
+        } else {
+            res.redirect( '/products/cart' ); 
+        }
     } )
     .catch( err => {
         debugger;
@@ -80,14 +98,18 @@ export function getCartProducts ( req, res, next ) {
         return basket.getItem();
     }).then( arrItems => {
         const _arrItems = arrItems.map( itm => {
-            return new Product(  
+            const product = new Product(  
                 itm.title, 
                 itm.price, 
                 unixToDateHR( Number( itm.prodDate ) ),
                 itm.description, 
                 itm.image, 
-                itm.id 
+                itm.id
             ); 
+
+            product.quantity = itm.cart_product.quantity; 
+
+            return product;
         } );
 
         Product.sort( _arrItems, req.query.sort ); 

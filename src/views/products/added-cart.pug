@@ -50,8 +50,23 @@ block main-layout__block
                         img.container-product__image-cont__img( src=prod.image )
                     div.container-product__buttons
                         if userLogged
-                            a.container-product__button( href=`/products/add/${prod.id}` )
-                                img( src="https://tinyurl.com/y6h2f2pz" title="Add to Cart" )
+                            div.items-number=prod.quantity
+                                div.items-number__descr Items Added
+                            if sort
+                                a.container-product__button( 
+                                    href=`/products/add-remove/${prod.id}?sort=${sort}` 
+                                )
+                                    img( src="https://tinyurl.com/y6h2f2pz" title="Add to Cart" )
+                                a.container-product__button( 
+                                    href=`/products/add-remove/${prod.id}?action=remove` )
+                                    img( src="https://tinyurl.com/thjsns6" title="Remove from Cart" )
+                            else
+                                a.container-product__button( 
+                                    href=`/products/add-remove/${prod.id}?action=add` )
+                                    img( src="https://tinyurl.com/y6h2f2pz" title="Add to Cart" )
+                                a.container-product__button( 
+                                    href=`/products/add-remove/${prod.id}?action=remove` )
+                                    img( src="https://tinyurl.com/thjsns6" title="Remove from Cart" )
         script.
             let selectSort = document.getElementById( 'sort' );
             selectSort.addEventListener( 'change', function ( ev ) {

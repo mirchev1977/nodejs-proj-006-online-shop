@@ -47,6 +47,7 @@
 .container-product__buttons {
     width: 10%; 
     padding-top: 15px;
+    position: relative;
 }
 .container-product__button {
     box-sizing: border-box;
@@ -67,4 +68,20 @@
     margin-left: 14px;
     margin-bottom: 10px;
     width: 150px;
+}
+
+.items-number {
+    position: absolute;
+    padding: 10px 15px;
+    top: -30px;
+    right: -5px;
+    background-color: greenyellow;
+    border-radius: 50%;
+}
+
+.items-number__descr {
+    position: absolute;
+    top: 0px;
+    left: -80px;
+    background-color: inherit;
 }

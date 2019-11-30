@@ -8,6 +8,7 @@ export default class Product {
     private _prodDate:    string;
     private _description: string;
     private _image:       string;
+    public  quantity:     number;
 
     constructor ( 
         title:         string
