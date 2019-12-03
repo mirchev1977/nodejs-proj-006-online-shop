@@ -17,5 +17,6 @@ router.get('/all', controllersProducts.getAllProducts);
 router.get('/mine', controllersProducts.getMyProducts);
 router.get('/add-remove/:id', controllersProducts.getAddRemoveProductToCart);
 router.get('/cart', controllersProducts.getCartProducts);
+router.get('/buy', controllersProducts.getBuy);
 exports.default = router;
 //# sourceMappingURL=routes-products.js.map

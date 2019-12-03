@@ -12,4 +12,6 @@ router.get(  '/add-remove/:id', controllersProducts.getAddRemoveProductToCart );
 
 router.get(  '/cart',     controllersProducts.getCartProducts    );
 
+router.get(  '/buy',      controllersProducts.getBuy             );
+
 export default router;

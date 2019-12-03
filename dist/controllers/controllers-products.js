@@ -24,8 +24,10 @@ function getAllProducts(req, res, next) {
 }
 exports.getAllProducts = getAllProducts;
 function getMyProducts(req, res, next) {
-    access_controller_1.default(req, res, next, { isLogged: true,
-        roles: { admin: 1 } });
+    access_controller_1.default(req, res, next, {
+        isLogged: true,
+        roles: { admin: 1 }
+    });
     models_product_1.default.getMine(req.userLogged.id, req.query).then(arrProducts => {
         res.render('products/mine', {
             userLogged: req['userLogged'],
@@ -93,8 +95,10 @@ function getAddRemoveProductToCart(req, res, next) {
 }
 exports.getAddRemoveProductToCart = getAddRemoveProductToCart;
 function getCartProducts(req, res, next) {
-    access_controller_1.default(req, res, next, { isLogged: true,
-        roles: { user: 1, admin: 1 } });
+    access_controller_1.default(req, res, next, {
+        isLogged: true,
+        roles: { user: 1, admin: 1 }
+    });
     req.userLogged.repo.getCart().then(basket => {
         return basket.getItem();
     }).then(arrItems => {
@@ -119,4 +123,36 @@ function getCartProducts(req, res, next) {
     });
 }
 exports.getCartProducts = getCartProducts;
+function getBuy(req, res, next) {
+    access_controller_1.default(req, res, next, {
+        isLogged: true,
+        roles: { user: 1, admin: 1 }
+    });
+    let arrCartItems;
+    let arrOrderItems = [];
+    let cart;
+    req.userLogged.repo.getCart().then(_cart => {
+        cart = _cart;
+        return _cart.getItem();
+    })
+        .then(_arrItems => {
+        arrCartItems = _arrItems;
+        return req.userLogged.repo.createOrder();
+    })
+        .then(_order => {
+        arrCartItems.forEach(_itm => {
+            arrOrderItems.push(_order.addProduct(_itm, { through: { quantity: _itm.cart_product.quantity } }));
+            cart.removeItem(_itm);
+        });
+        return Promise.all(arrOrderItems);
+    })
+        .then(_arrOrderItems => {
+        debugger;
+    })
+        .catch(_err => {
+        console.log('error');
+    });
+    next();
+}
+exports.getBuy = getBuy;
 //# sourceMappingURL=controllers-products.js.map
