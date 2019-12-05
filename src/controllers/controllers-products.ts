@@ -133,11 +133,105 @@ export function getCartProducts(req, res, next) {
         });
 }
 
+
+export function getOrderItems(req, res, next) {
+    accessController(req, res, next, {
+        isLogged: true
+        , roles: { user: 1, admin: 1 }
+    });
+
+    req.userLogged.repo.getOrders().then( _arrOrders => {
+        const resp = {};
+        const promise = new Promise( ( resolve, reject ) => {
+            _arrOrders.forEach( _order => {
+                const time   = _order.createdAt.getTime();
+                resp[ time ] = _order.getProducts();
+            } );
+
+            let arrKeys = Object.keys( resp );
+
+            if ( arrKeys.length > 0 ) {
+                resolve( resp );
+            }
+        } );
+
+        return promise;
+    } )
+    .then( resp => {
+        let arrKeys = Object.keys( resp );
+
+        const promise = new Promise( ( resolve, reject ) => {
+            if ( arrKeys.length > 0 ) {
+                let _objItemsOrdered = {};
+                arrKeys.forEach( ( key, i ) => {
+                    resp[ key ]
+                    .then( _prods => {
+                        _objItemsOrdered[ key ] = _prods;
+
+                        if (  Object.keys( _objItemsOrdered ).length === arrKeys.length ) {
+                            resolve( _objItemsOrdered ); 
+                        }
+
+                    } )
+                    .catch( err => {
+                        reject( err );
+                    } ); 
+                } );
+            }
+
+        } );
+
+        return promise;
+    } ).then( _objItemsOrdered => {
+        const arrOrders = Object.keys( _objItemsOrdered );
+
+        arrOrders.sort( ( a, b ) => {
+            return ( Number( a ) - Number( b ) );
+        } );
+
+        const arrOrderItems = [];
+
+        arrOrders.forEach( ( key ) => {
+            const itms = _objItemsOrdered[ key ];
+            let products = [];
+            itms.forEach(itm => {
+                const product = new Product(
+                    itm.title,
+                    itm.price,
+                    unixToDateHR(Number(itm.prodDate)),
+                    itm.description,
+                    itm.image,
+                    itm.id
+                );
+
+                product.quantity = itm.order_item.quantity; 
+                products.push( product );
+            }); 
+
+            let dt   = new Date( Number( key ) );
+            let dd   = dt.getDate();
+            let mm   = dt.getMonth();
+            let yyyy = dt.getFullYear();
+            let dtHr = `${dd}.${mm}.${yyyy}`;
+
+            arrOrderItems.push( { orderedOn: dtHr, products: products } );
+        } );
+        debugger;
+        next();
+    } )
+    .catch( err => {
+        debugger;
+        next();
+    } );
+}
+
 export function getBuy(req, res, next) {
     accessController(req, res, next, {
         isLogged: true
         , roles: { user: 1, admin: 1 }
     });
+
+    const sortBy = req.query.sort || '';
 
     let arrCartItems;
     let arrOrderItems = [];
@@ -161,11 +255,13 @@ export function getBuy(req, res, next) {
         return Promise.all( arrOrderItems );
     } )
     .then( _arrOrderItems => {
-        debugger;
+        if ( sortBy ) {
+            res.redirect( '/products/ordered?sort=' + sortBy ); 
+        } else {
+            res.redirect( '/products/ordered' ); 
+        }
     } )
     .catch( _err => {
         console.log( 'error' ); 
     } );
-
-    next();
 }

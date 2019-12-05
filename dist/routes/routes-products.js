@@ -18,5 +18,6 @@ router.get('/mine', controllersProducts.getMyProducts);
 router.get('/add-remove/:id', controllersProducts.getAddRemoveProductToCart);
 router.get('/cart', controllersProducts.getCartProducts);
 router.get('/buy', controllersProducts.getBuy);
+router.get('/ordered', controllersProducts.getOrderItems);
 exports.default = router;
 //# sourceMappingURL=routes-products.js.map
