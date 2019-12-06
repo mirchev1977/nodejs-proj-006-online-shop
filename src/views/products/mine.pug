@@ -21,66 +21,67 @@ block main-layout__header__err
     div#err=ERR
 
 block main-layout__block
-    if ( !ERR || CONT )
-        select( id="sort" )
-            option Sort By
-            if sort === 'title'
-                option( value='/products/mine?sort=title', selected = 'selected' ) By Title
-            else
-                option( value='/products/mine?sort=title'    ) By Title
+    div.wrapper
+        if ( !ERR || CONT )
+            select( id="sort" )
+                option Sort By
+                if sort === 'title'
+                    option( value='/products/mine?sort=title', selected = 'selected' ) By Title
+                else
+                    option( value='/products/mine?sort=title'    ) By Title
+                if sort === 'price'
+                    option( value='/products/mine?sort=price', selected = 'selected' ) By Price
+                else 
+                    option( value='/products/mine?sort=price') By Price
+                if sort === 'prodDate'
+                    option( value='/products/mine?sort=prodDate', selected = 'selected' ) By Product Date
+                else
+                    option( value='/products/mine?sort=prodDate' ) By Product Date
             if sort === 'price'
-                option( value='/products/mine?sort=price', selected = 'selected' ) By Price
+                span  <a href="/products/ordered?sort=price">Purchase History</a>
+            else if sort === 'title'
+                span  <a href="/products/ordered?sort=title">Purchase History</a>
+            else if sort === 'prodDate'
+                span  <a href="/products/ordered?sort=prodDate">Purchase History</a>
             else 
-                option( value='/products/mine?sort=price') By Price
-            if sort === 'prodDate'
-                option( value='/products/mine?sort=prodDate', selected = 'selected' ) By Product Date
-            else
-                option( value='/products/mine?sort=prodDate' ) By Product Date
-        if sort === 'price'
-            span  <a href="/products/ordered?sort=price">Purchase History</a>
-        else if sort === 'title'
-            span  <a href="/products/ordered?sort=title">Purchase History</a>
-        else if sort === 'prodDate'
-            span  <a href="/products/ordered?sort=prodDate">Purchase History</a>
-        else 
-            span  <a href="/products/ordered">Purchase History</a>
-        div#prod-edited( style="display: none" )=`${prodId}`
-        div.container-products
-            each prod in arrProducts
-                div.container-product( id=`container-product-${prod.id}` )
-                    div.container-product__details
-                        h3="Title: " + prod.title
-                        hr
-                        p='Price: ' + prod.price
-                        hr
-                        p='Produced On: ' + prod.prodDate
-                        hr
-                        p='Description: ' + prod.description
-                    div.container-product__image-cont
-                        img.container-product__image-cont__img( src=prod.image )
-                    div.container-product__buttons
-                        if sort
-                            a.container-product__button( 
-                                href=`/products/add-remove/${prod.id}?action=add&sort=${sort}` )
-                                img( src="https://tinyurl.com/y6h2f2pz" title="Add to Cart" )
-                        else
-                            a.container-product__button( 
-                                href=`/products/add-remove/${prod.id}?action=add` )
-                                img( src="https://tinyurl.com/y6h2f2pz" title="Add to Cart" )
-                        a.container-product__button( href=`/admin/product/edit/${prod.id}` )
-                            img( src="https://tinyurl.com/yxgvxcoz" title="Edit" )
-                        a.container-product__button( href=`/admin/product/delete/${prod.id}` )
-                            img( src="https://tinyurl.com/y4hg2qlf" title="Delete" )
-        script.
-            let edited = document.getElementById( 'prod-edited' )
-            if ( edited.innerText ) {
-                let prodEdited = document.getElementById( edited.innerText );
-                prodEdited.setAttribute( 'style', 'background-color: yellowgreen' );
-            }
+                span  <a href="/products/ordered">Purchase History</a>
+            div#prod-edited( style="display: none" )=`${prodId}`
+            div.container-products
+                each prod in arrProducts
+                    div.container-product( id=`container-product-${prod.id}` )
+                        div.container-product__details
+                            h3="Title: " + prod.title
+                            hr
+                            p='Price: ' + prod.price
+                            hr
+                            p='Produced On: ' + prod.prodDate
+                            hr
+                            p='Description: ' + prod.description
+                        div.container-product__image-cont
+                            img.container-product__image-cont__img( src=prod.image )
+                        div.container-product__buttons
+                            if sort
+                                a.container-product__button( 
+                                    href=`/products/add-remove/${prod.id}?action=add&sort=${sort}` )
+                                    img( src="https://tinyurl.com/y6h2f2pz" title="Add to Cart" )
+                            else
+                                a.container-product__button( 
+                                    href=`/products/add-remove/${prod.id}?action=add` )
+                                    img( src="https://tinyurl.com/y6h2f2pz" title="Add to Cart" )
+                            a.container-product__button( href=`/admin/product/edit/${prod.id}` )
+                                img( src="https://tinyurl.com/yxgvxcoz" title="Edit" )
+                            a.container-product__button( href=`/admin/product/delete/${prod.id}` )
+                                img( src="https://tinyurl.com/y4hg2qlf" title="Delete" )
+    script.
+        let edited = document.getElementById( 'prod-edited' )
+        if ( edited.innerText ) {
+            let prodEdited = document.getElementById( edited.innerText );
+            prodEdited.setAttribute( 'style', 'background-color: yellowgreen' );
+        }
 
-            let selectSort = document.getElementById( 'sort' );
-            selectSort.addEventListener( 'change', function ( ev ) {
-                let href = this.options[ this.selectedIndex ].value
-                if ( href === 'Sort By' ) href = '';
-                window.location.href = href;
-            } );
+        let selectSort = document.getElementById( 'sort' );
+        selectSort.addEventListener( 'change', function ( ev ) {
+            let href = this.options[ this.selectedIndex ].value
+            if ( href === 'Sort By' ) href = '';
+            window.location.href = href;
+        } );

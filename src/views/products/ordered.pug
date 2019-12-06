@@ -20,59 +20,60 @@ block main-layout__header__err
     div#err=ERR
 
 block main-layout__block
-    if !ERR
-        select( id="sort" )
-            option Sort By
-            if sort === 'title'
-                option( value='/products/ordered?sort=title', selected = 'selected' ) By Title
-            else
-                option( value='/products/ordered?sort=title'    ) By Title
+    div.wrapper
+        if !ERR
+            select( id="sort" )
+                option Sort By
+                if sort === 'title'
+                    option( value='/products/ordered?sort=title', selected = 'selected' ) By Title
+                else
+                    option( value='/products/ordered?sort=title'    ) By Title
+                if sort === 'price'
+                    option( value='/products/ordered?sort=price', selected = 'selected' ) By Price
+                else 
+                    option( value='/products/ordered?sort=price') By Price
+                if sort === 'prodDate'
+                    option( value='/products/ordered?sort=prodDate', selected = 'selected' ) By Product Date
+                else
+                    option( value='/products/ordered?sort=prodDate' ) By Product Date
             if sort === 'price'
-                option( value='/products/ordered?sort=price', selected = 'selected' ) By Price
+                span  <a href="/products/ordered?sort=price">Purchase History</a>
+            else if sort === 'title'
+                span  <a href="/products/ordered?sort=title">Purchase History</a>
+            else if sort === 'prodDate'
+                span  <a href="/products/ordered?sort=prodDate">Purchase History</a>
             else 
-                option( value='/products/ordered?sort=price') By Price
-            if sort === 'prodDate'
-                option( value='/products/ordered?sort=prodDate', selected = 'selected' ) By Product Date
-            else
-                option( value='/products/ordered?sort=prodDate' ) By Product Date
-        if sort === 'price'
-            span  <a href="/products/ordered?sort=price">Purchase History</a>
-        else if sort === 'title'
-            span  <a href="/products/ordered?sort=title">Purchase History</a>
-        else if sort === 'prodDate'
-            span  <a href="/products/ordered?sort=prodDate">Purchase History</a>
-        else 
-            span  <a href="/products/ordered">Purchase History</a>
-        if arrProducts && arrProducts.length > 0
-            a( href="/products/buy" ).buy-link
-                button.buy-button Buy
+                span  <a href="/products/ordered">Purchase History</a>
+            if arrProducts && arrProducts.length > 0
+                a( href="/products/buy" ).buy-link
+                    button.buy-button Buy
 
-        br
-        h1( style="text-align: center;" ) Purchase History
-        br
-        each itm in arrOrdered
-            h2=`Ordered On: ${itm.orderedOn}`
-            div.container-products
-                each prod in itm.products
-                    div.container-product
-                        div.container-product__details
-                            h3="Title: " + prod.title
-                            hr
-                            p='Price: ' + prod.price
-                            hr
-                            p='Produced On: ' + prod.prodDate
-                            hr
-                            p='Description: ' + prod.description
-                        div.container-product__image-cont
-                            img.container-product__image-cont__img( src=prod.image )
-                        div.container-product__buttons
-                            if userLogged
-                                div.items-number=prod.quantity
-                                    div.items-number__descr Items Bought
-        script.
-            let selectSort = document.getElementById( 'sort' );
-            selectSort.addEventListener( 'change', function ( ev ) {
-                let href = this.options[ this.selectedIndex ].value
-                if ( href === 'Sort By' ) href = '';
-                window.location.href = href;
-            } );
+            br
+            h1( style="text-align: center;" ) Purchase History
+            br
+            each itm in arrOrdered
+                h2=`Ordered On: ${itm.orderedOn}`
+                div.container-products
+                    each prod in itm.products
+                        div.container-product
+                            div.container-product__details
+                                h3="Title: " + prod.title
+                                hr
+                                p='Price: ' + prod.price
+                                hr
+                                p='Produced On: ' + prod.prodDate
+                                hr
+                                p='Description: ' + prod.description
+                            div.container-product__image-cont
+                                img.container-product__image-cont__img( src=prod.image )
+                            div.container-product__buttons
+                                if userLogged
+                                    div.items-number=prod.quantity
+                                        div.items-number__descr Items Bought
+    script.
+        let selectSort = document.getElementById( 'sort' );
+        selectSort.addEventListener( 'change', function ( ev ) {
+            let href = this.options[ this.selectedIndex ].value
+            if ( href === 'Sort By' ) href = '';
+            window.location.href = href;
+        } );

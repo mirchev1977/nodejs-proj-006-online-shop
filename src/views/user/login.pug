@@ -7,15 +7,16 @@ block main-layout__header__err
     div#err=ERR
 
 block main-layout__block
-    h1 Register
-    form( method="POST" action="/login" class="form-reg-log" )
-        input( type="hidden" name="path" id="path" value=`${path}`)
-        div( class="form-reg-log_field" )
-            label( for="email" ) Email*
-            input( type="text" name="email" id="email" value=`${usr['email'] || ''}`)
-        div( class="form-reg-log_field" )
-            label( for="password" ) Password*
-            input( type="password" name="password" id="password" )
-        div( class="form-reg-log_field submit" )
-            label( for="password_repeat" ) 
-            button( type="submit" ) Submit
+    div.wrapper
+        h1 Register
+        form( method="POST" action="/login" class="form-reg-log" )
+            input( type="hidden" name="path" id="path" value=`${path}`)
+            div( class="form-reg-log_field" )
+                label( for="email" ) Email*
+                input( type="text" name="email" id="email" value=`${usr['email'] || ''}`)
+            div( class="form-reg-log_field" )
+                label( for="password" ) Password*
+                input( type="password" name="password" id="password" )
+            div( class="form-reg-log_field submit" )
+                label( for="password_repeat" ) 
+                button( type="submit" ) Submit

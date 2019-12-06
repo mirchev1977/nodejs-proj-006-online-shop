@@ -20,68 +20,69 @@ block main-layout__header__err
     div#err=ERR
 
 block main-layout__block
-    if !ERR
-        select( id="sort" )
-            option Sort By
-            if sort === 'title'
-                option( value='/products/cart?sort=title', selected = 'selected' ) By Title
-            else
-                option( value='/products/cart?sort=title'    ) By Title
+    div.wrapper
+        if !ERR
+            select( id="sort" )
+                option Sort By
+                if sort === 'title'
+                    option( value='/products/cart?sort=title', selected = 'selected' ) By Title
+                else
+                    option( value='/products/cart?sort=title'    ) By Title
+                if sort === 'price'
+                    option( value='/products/cart?sort=price', selected = 'selected' ) By Price
+                else 
+                    option( value='/products/cart?sort=price') By Price
+                if sort === 'prodDate'
+                    option( value='/products/cart?sort=prodDate', selected = 'selected' ) By Product Date
+                else
+                    option( value='/products/cart?sort=prodDate' ) By Product Date
             if sort === 'price'
-                option( value='/products/cart?sort=price', selected = 'selected' ) By Price
+                span  <a href="/products/ordered?sort=price">Purchase History</a>
+            else if sort === 'title'
+                span  <a href="/products/ordered?sort=title">Purchase History</a>
+            else if sort === 'prodDate'
+                span  <a href="/products/ordered?sort=prodDate">Purchase History</a>
             else 
-                option( value='/products/cart?sort=price') By Price
-            if sort === 'prodDate'
-                option( value='/products/cart?sort=prodDate', selected = 'selected' ) By Product Date
-            else
-                option( value='/products/cart?sort=prodDate' ) By Product Date
-        if sort === 'price'
-            span  <a href="/products/ordered?sort=price">Purchase History</a>
-        else if sort === 'title'
-            span  <a href="/products/ordered?sort=title">Purchase History</a>
-        else if sort === 'prodDate'
-            span  <a href="/products/ordered?sort=prodDate">Purchase History</a>
-        else 
-            span  <a href="/products/ordered">Purchase History</a>
-        if arrProducts && arrProducts.length > 0
-            a( href="/products/buy" ).buy-link
-                button.buy-button Buy
-        div.container-products
-            each prod in arrProducts
-                div.container-product
-                    div.container-product__details
-                        h3="Title: " + prod.title
-                        hr
-                        p='Price: ' + prod.price
-                        hr
-                        p='Produced On: ' + prod.prodDate
-                        hr
-                        p='Description: ' + prod.description
-                    div.container-product__image-cont
-                        img.container-product__image-cont__img( src=prod.image )
-                    div.container-product__buttons
-                        if userLogged
-                            div.items-number=prod.quantity
-                                div.items-number__descr Items Added
-                            if sort
-                                a.container-product__button( 
-                                    href=`/products/add-remove/${prod.id}?sort=${sort}` 
-                                )
-                                    img( src="https://tinyurl.com/y6h2f2pz" title="Add to Cart" )
-                                a.container-product__button( 
-                                    href=`/products/add-remove/${prod.id}?action=remove` )
-                                    img( src="https://tinyurl.com/thjsns6" title="Remove from Cart" )
-                            else
-                                a.container-product__button( 
-                                    href=`/products/add-remove/${prod.id}?action=add` )
-                                    img( src="https://tinyurl.com/y6h2f2pz" title="Add to Cart" )
-                                a.container-product__button( 
-                                    href=`/products/add-remove/${prod.id}?action=remove` )
-                                    img( src="https://tinyurl.com/thjsns6" title="Remove from Cart" )
-        script.
-            let selectSort = document.getElementById( 'sort' );
-            selectSort.addEventListener( 'change', function ( ev ) {
-                let href = this.options[ this.selectedIndex ].value
-                if ( href === 'Sort By' ) href = '';
-                window.location.href = href;
-            } );
+                span  <a href="/products/ordered">Purchase History</a>
+            if arrProducts && arrProducts.length > 0
+                a( href="/products/buy" ).buy-link
+                    button.buy-button Buy
+            div.container-products
+                each prod in arrProducts
+                    div.container-product
+                        div.container-product__details
+                            h3="Title: " + prod.title
+                            hr
+                            p='Price: ' + prod.price
+                            hr
+                            p='Produced On: ' + prod.prodDate
+                            hr
+                            p='Description: ' + prod.description
+                        div.container-product__image-cont
+                            img.container-product__image-cont__img( src=prod.image )
+                        div.container-product__buttons
+                            if userLogged
+                                div.items-number=prod.quantity
+                                    div.items-number__descr Items Added
+                                if sort
+                                    a.container-product__button( 
+                                        href=`/products/add-remove/${prod.id}?sort=${sort}` 
+                                    )
+                                        img( src="https://tinyurl.com/y6h2f2pz" title="Add to Cart" )
+                                    a.container-product__button( 
+                                        href=`/products/add-remove/${prod.id}?action=remove` )
+                                        img( src="https://tinyurl.com/thjsns6" title="Remove from Cart" )
+                                else
+                                    a.container-product__button( 
+                                        href=`/products/add-remove/${prod.id}?action=add` )
+                                        img( src="https://tinyurl.com/y6h2f2pz" title="Add to Cart" )
+                                    a.container-product__button( 
+                                        href=`/products/add-remove/${prod.id}?action=remove` )
+                                        img( src="https://tinyurl.com/thjsns6" title="Remove from Cart" )
+    script.
+        let selectSort = document.getElementById( 'sort' );
+        selectSort.addEventListener( 'change', function ( ev ) {
+            let href = this.options[ this.selectedIndex ].value
+            if ( href === 'Sort By' ) href = '';
+            window.location.href = href;
+        } );

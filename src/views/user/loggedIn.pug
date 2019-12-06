@@ -7,7 +7,8 @@ block append main-layout__header__menu
     div#tokenHolder( style="display: none" )=loginToken
     div#pathHolder( style="display: none" )=path
 block main-layout__block
-    h1 You are now logged in...
+    div.wrapper
+        h1 You are now logged in...
     script.
         var divLoginToken = document.getElementById( 'tokenHolder' );
         var divPath       = document.getElementById( 'pathHolder' );
