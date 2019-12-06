@@ -165,7 +165,7 @@ function getOrderItems(req, res, next) {
     }).then(_objItemsOrdered => {
         const arrOrders = Object.keys(_objItemsOrdered);
         arrOrders.sort((a, b) => {
-            return (Number(a) - Number(b));
+            return (Number(b) - Number(a));
         });
         const arrOrderItems = [];
         arrOrders.forEach((key) => {
@@ -181,10 +181,27 @@ function getOrderItems(req, res, next) {
             let mm = dt.getMonth();
             let yyyy = dt.getFullYear();
             let dtHr = `${dd}.${mm}.${yyyy}`;
+            products.sort((a, b) => {
+                if (req.query.sort === 'price') {
+                    return (a.price - b.price);
+                }
+                else if (req.query.sort === 'title') {
+                    return (a.title.localeCompare(b.title));
+                }
+                else if (req.query.sort === 'prodDate') {
+                    return (a.prodUnixDate - b.prodUnixDate);
+                }
+                else {
+                    return (a.id - b.id);
+                }
+            });
             arrOrderItems.push({ orderedOn: dtHr, products: products });
         });
-        debugger;
-        next();
+        res.render('products/ordered', {
+            userLogged: req['userLogged'],
+            arrOrdered: arrOrderItems,
+            sort: req.query.sort
+        });
     })
         .catch(err => {
         debugger;
