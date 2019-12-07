@@ -4,12 +4,22 @@
     padding: 0px;
 }
 
+h2.do-opts {
+    font-size: 20px;
+}
+
+li.do-opts {
+    margin-left: 50px;
+    font-size: 20px;
+    line-height: 27px;
+}
+
 body {
     height: 100%;
 }
 
 div.wrapper {
-    height: 70%;
+    min-height: 70%;
 }
 
 .main-layout__user-logged-in {
