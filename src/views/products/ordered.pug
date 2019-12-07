@@ -36,14 +36,15 @@ block main-layout__block
                     option( value='/products/ordered?sort=prodDate', selected = 'selected' ) By Product Date
                 else
                     option( value='/products/ordered?sort=prodDate' ) By Product Date
-            if sort === 'price'
-                span  <a href="/products/ordered?sort=price">Purchase History</a>
-            else if sort === 'title'
-                span  <a href="/products/ordered?sort=title">Purchase History</a>
-            else if sort === 'prodDate'
-                span  <a href="/products/ordered?sort=prodDate">Purchase History</a>
-            else 
-                span  <a href="/products/ordered">Purchase History</a>
+            if userLogged
+                if sort === 'price'
+                    span  <a href="/products/ordered?sort=price">Purchase History</a>
+                else if sort === 'title'
+                    span  <a href="/products/ordered?sort=title">Purchase History</a>
+                else if sort === 'prodDate'
+                    span  <a href="/products/ordered?sort=prodDate">Purchase History</a>
+                else 
+                    span  <a href="/products/ordered">Purchase History</a>
             if arrProducts && arrProducts.length > 0
                 a( href="/products/buy" ).buy-link
                     button.buy-button Buy

@@ -37,14 +37,15 @@ block main-layout__block
                     option( value='/products/mine?sort=prodDate', selected = 'selected' ) By Product Date
                 else
                     option( value='/products/mine?sort=prodDate' ) By Product Date
-            if sort === 'price'
-                span  <a href="/products/ordered?sort=price">Purchase History</a>
-            else if sort === 'title'
-                span  <a href="/products/ordered?sort=title">Purchase History</a>
-            else if sort === 'prodDate'
-                span  <a href="/products/ordered?sort=prodDate">Purchase History</a>
-            else 
-                span  <a href="/products/ordered">Purchase History</a>
+            if userLogged
+                if sort === 'price'
+                    span  <a href="/products/ordered?sort=price">Purchase History</a>
+                else if sort === 'title'
+                    span  <a href="/products/ordered?sort=title">Purchase History</a>
+                else if sort === 'prodDate'
+                    span  <a href="/products/ordered?sort=prodDate">Purchase History</a>
+                else 
+                    span  <a href="/products/ordered">Purchase History</a>
             div#prod-edited( style="display: none" )=`${prodId}`
             div.container-products
                 each prod in arrProducts
