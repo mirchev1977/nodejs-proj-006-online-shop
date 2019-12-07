@@ -141,6 +141,9 @@ export function getOrderItems(req, res, next) {
     });
 
     req.userLogged.repo.getOrders().then( _arrOrders => {
+        if ( _arrOrders.length <= 0 ) {
+            res.redirect( '/products/all' );
+        }
         const resp = {};
         const promise = new Promise( ( resolve, reject ) => {
             _arrOrders.forEach( _order => {
