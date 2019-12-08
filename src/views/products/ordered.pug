@@ -54,6 +54,7 @@ block main-layout__block
             br
             each itm in arrOrdered
                 h2=`Ordered On: ${itm.orderedOn}`
+                br
                 div.container-products
                     each prod in itm.products
                         div.container-product
@@ -71,6 +72,9 @@ block main-layout__block
                                 if userLogged
                                     div.items-number=prod.quantity
                                         div.items-number__descr Items Bought
+                br
+                hr
+                br
     script.
         let selectSort = document.getElementById( 'sort' );
         selectSort.addEventListener( 'change', function ( ev ) {
